@@ -18,18 +18,21 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: eXo Platform Developer Documentation
-description: >- # this means to ignore newlines until "baseurl:"
-  eXo Platform Developer Documentation
+title: eXo Platform
+description: eXo Platform Developer Documentation
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://www.exoplatform.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: eXoPlatform
 github_username:  exoplatform
 
 # Build settings
-theme: minima
+remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-feed
+
+
+color_scheme: exo
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
