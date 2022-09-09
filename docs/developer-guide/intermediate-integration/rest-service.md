@@ -6,4 +6,4 @@ parent: Intermediate Integration
 grand_parent: Developer Guide
 
 ---
-Create a new notification
+Create a new Rest Service

@@ -6,4 +6,4 @@ parent: Intermediate Integration
 grand_parent: Developer Guide
 
 ---
-Create a new Rest Service
+Create a new Front End Application
