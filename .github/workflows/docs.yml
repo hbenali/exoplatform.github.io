@@ -5,13 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@develop
 
     - name: vuepress-deploy
       uses: jenkey2011/vuepress-deploy@master
       env:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TARGET_REPO: ahamdi/ahamdi.github.io
+        TARGET_REPO: exoplatform/exoplatform.github.io
         TARGET_BRANCH: gh-pages
-        BUILD_SCRIPT: cd docs && yarn && yarn build
-        BUILD_DIR: src/.vuepress/dist
+        BUILD_SCRIPT: yarn && yarn build
+        BUILD_DIR: docs/.vuepress/dist
