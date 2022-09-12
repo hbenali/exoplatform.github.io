@@ -1,10 +1,21 @@
-How to run site locally with Jekyll :
 
-Clone the repository : 
-git clone git@github.com:exoplatform/exoplatform.github.io.git
 
-For the github documentation :
-https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/testing-your-github-pages-site-locally-with-jekyll
+## How to run site locally :
 
-Theme Documentation :
-https://just-the-docs.github.io/just-the-docs
+1. Clone the repository : 
+   ```shell
+      git clone git@github.com:exoplatform/exoplatform.github.io.git
+   ```
+1. Install project dependencies
+   ```shell
+      cd exoplatform.github.io
+      npm install
+   ```
+1. Run the development server
+   ```
+      npm run dev
+   ```
+1. Access documentation at http://localhost:8080
+
+
+This documentation site was built using [Vuepress](https://vuepress.vuejs.org/)
