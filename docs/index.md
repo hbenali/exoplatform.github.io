@@ -3,7 +3,7 @@ home: true
 heroImage: img/eXo.png
 tagline: eXo documentation
 actionText: Quick Start →
-actionLink: /guide/
+actionLink: /guide/getting-started/
 customFeatures:
 - title: Getting started
   details: Getting started documentation
