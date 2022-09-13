@@ -1,11 +1,9 @@
 # Start eXo community
 
-- This chapter covers the following topics:
+This chapter covers the following topics:
 
-    - The minimum system requirements needed to run the stack of tools
-      used by eXo platform
-    - The software prerequisites needed to be installed before running
-      the eXo platform stack
+- The minimum system requirements needed to run the stack of tools used by eXo platform
+- The software prerequisites needed to be installed before running the eXo platform stack
 
 ## System requirements
 
