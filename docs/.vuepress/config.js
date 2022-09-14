@@ -39,6 +39,10 @@ module.exports = {
         link: '/guide/getting-started/Introduction.html',
       },
       {
+        text: 'REST API',
+        link: '/guide/developer-guide/advanced-integration/rest-api',
+      },
+      {
         text: 'eXo website',
         link: 'https://www.exoplatform.com'
       }
@@ -85,7 +89,36 @@ module.exports = {
               path: '/guide/developer-guide/advanced-integration/',
               children: [
                 '/guide/developer-guide/advanced-integration/extension-points',
-                '/guide/developer-guide/advanced-integration/rest-api',
+                {
+                  title: 'REST API',
+                  collapsable: true,
+                  path: '/guide/developer-guide/advanced-integration/rest-api',
+                  children: [
+                    ['/guide/openapi/agenda', 'Agenda REST Api'],
+                    ['/guide/openapi/anti-malware', 'Anti Malware REST Api'],
+                    ['/guide/openapi/app-center', 'App Center REST Api'],  
+                    ['/guide/openapi/chat', 'Chat REST Api'],
+                    ['/guide/openapi/commons', 'Commons REST Api'],
+                    ['/guide/openapi/dlp', 'Data Leak Protection REST Api'],
+                    ['/guide/openapi/documents', 'Documents REST Api'],
+                    ['/guide/openapi/ecms', 'ECMS REST Api'],
+                    ['/guide/openapi/gamification', 'Gamification REST Api'],
+                    ['/guide/openapi/gatein_portal', 'Portal REST Api'],
+                    ['/guide/openapi/kudos', 'Kudos REST Api'],
+                    ['/guide/openapi/multifactor-authentication', 'Multi-factor AuthenticationREST Api'],
+                    ['/guide/openapi/news', 'News REST Api'],
+                    ['/guide/openapi/notes', 'Notes REST Api'],
+                    ['/guide/openapi/onlyoffice', 'Onlyoffice REST Api'],
+                    ['/guide/openapi/perk-store', 'Perk store REST Api'],
+                    ['/guide/openapi/poll', 'Poll REST Api'],
+                    ['/guide/openapi/processes', 'Processes REST Api'],
+                    ['/guide/openapi/social', 'Social REST Api'],
+                    ['/guide/openapi/social-swagger-with-samples', 'MD generated doc with Samples'],
+                    ['/guide/openapi/tasks', 'Tasks REST Api'],
+                    ['/guide/openapi/wallet', 'Wallet REST Api'],
+                    ['/guide/openapi/web-conferencing', 'Web Conferencing REST Api'],
+                  ]
+                },
               ]
             },
             {

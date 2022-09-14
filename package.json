@@ -15,5 +15,12 @@
   "license": "AGPL",
   "devDependencies": {
     "vuepress": "^1.5.3"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "js-yaml": "^4.0.0",
+    "js-yaml-loader": "^1.2.2",
+    "swagger-ui": "^3.33.0",
+    "yaml": "^1.10.0"
   }
 }
