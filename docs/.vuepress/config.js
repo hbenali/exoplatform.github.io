@@ -94,8 +94,8 @@ module.exports = {
               path: '/guide/developer-guide/miscellaneous/',
               children: [
                 '/guide/developer-guide/miscellaneous/debug-dev-mode',
-                '/guide/developer-guide/miscellaneous/feature-flags',
-                '/guide/developer-guide/miscellaneous/properties-reference',
+                //'/guide/developer-guide/miscellaneous/feature-flags',
+                //'/guide/developer-guide/miscellaneous/properties-reference',
               ]
             },
           ]
