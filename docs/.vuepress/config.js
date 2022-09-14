@@ -113,7 +113,6 @@ module.exports = {
                     ['/guide/openapi/poll', 'Poll REST Api'],
                     ['/guide/openapi/processes', 'Processes REST Api'],
                     ['/guide/openapi/social', 'Social REST Api'],
-                    ['/guide/openapi/social-swagger-with-samples', 'MD generated doc with Samples'],
                     ['/guide/openapi/tasks', 'Tasks REST Api'],
                     ['/guide/openapi/wallet', 'Wallet REST Api'],
                     ['/guide/openapi/web-conferencing', 'Web Conferencing REST Api'],

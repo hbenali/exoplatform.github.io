@@ -35,7 +35,7 @@ The full environment will be provided as Docker containers assembled together us
 - Download the file configuration file of Nging server from [here](https://raw.githubusercontent.com/exo-docker/exo-community/master/conf/nginx.conf) and save it under the folder **conf**
 - Using your preferred console, start the environment with the command:
 
-``` console
+```shell
 docker-compose -f docker-compose.yml up
 ```
 
