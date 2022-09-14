@@ -36,7 +36,7 @@ module.exports = {
     nav: [
       {
         text: 'Guide',
-        link: '/guide/',
+        link: '/guide/getting-started/Introduction.html',
       },
       {
         text: 'eXo website',
@@ -48,7 +48,7 @@ module.exports = {
         {
           title: 'Getting Started',
           collapsable: false,
-          path: '/guide/getting-started/',
+          path: '/guide/getting-started/Introduction.html',
           children: [
             '/guide/getting-started/Introduction',
             '/guide/getting-started/start-community',
@@ -58,7 +58,7 @@ module.exports = {
         {
           title: 'Developer Guide',
           collapsable: false,
-          path: '/guide/developer-guide/',
+          path: '/guide/developer-guide/getting-started',
           children: [
             '/guide/developer-guide/getting-started',
             {

@@ -7,13 +7,13 @@ actionLink: /guide/getting-started/
 customFeatures:
 - title: Getting started
   details: Getting started documentation
-  link: /guide/getting-started/
+  link: /guide/getting-started/Introduction.html
 - title: User & Administrator guides
   details: Documentation for using and Administrating eXo platform
   link: /guide/userAndAdminGuide
 - title: Developer Guides
   details: Guides to follow
-  link: /guide/developer-guide/
+  link: /guide/developer-guide/getting-started.html
 footer: Made by eXo Platform
 ---
 
