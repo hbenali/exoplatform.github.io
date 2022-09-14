@@ -14,7 +14,7 @@ customFeatures:
 - title: Developer Guides
   details: Guides to follow
   link: /guide/developer-guide/
-footer: Made by eXo with ❤️
+footer: Made by eXo Platform
 ---
 
 <div class="features">
