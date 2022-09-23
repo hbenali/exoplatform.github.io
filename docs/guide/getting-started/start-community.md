@@ -7,9 +7,9 @@ This chapter covers the following topics:
 
 ## System requirements
 
-> **Warning**
-> The requirements cited below are provisional and may change according to quality tests findings.
-
+::: warning
+The requirements cited below are provisional and may change according to quality tests findings.
+:::
 
 To run the Docker compose of eXo Platform 6.4, your system is required
 to meet the following specifications or higher:
@@ -19,10 +19,10 @@ to meet the following specifications or higher:
 - Free disk space: 10GB minimum
 - Browser Compatibility: Check Browser compatibility section in
   [Supported Environments](https://www.exoplatform.com/supported-environments)
-
-> **Note**
-> The eXo server will run on the port 80 by default, so make sure this port is not currently in use or configure eXo Platform to use another port.
-
+  
+::: tip Note
+The eXo server will run on the port 80 by default, so make sure this port is not currently in use or configure eXo Platform to use another port.
+:::
 ## Prerequisites
 
 The full environment will be provided as Docker containers assembled together using a Docker Compose file. To install and try eXo platform community edition, you need to install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
@@ -31,9 +31,12 @@ The full environment will be provided as Docker containers assembled together us
 
 ### With Dockerfile
 
-- Create a new folder $EXO\_HOME, this folder will contain all files needed to run the eXo platform environment. 
-> **Warning**
-> It is recommended to add **$EXO_HOME** as an environment variable in your system, it will be used in all the tutorials.
+- Create a new folder $EXO\_HOME, this folder will contain all files needed to run the eXo platform environment.
+
+::: warning
+It is recommended to add **$EXO_HOME** as an environment variable in your system, it will be used in all the tutorials.
+:::
+
 - Download the Docker Compose from [here](https://raw.githubusercontent.com/exo-docker/exo-community/master/docker-compose.yml) and save it under $EXO\_HOME
 - Create the folder **conf** which will contain configuration files needed for the services deployed in docker images
 - Download the file configuration file of Nginx server from [here](https://raw.githubusercontent.com/exo-docker/exo-community/master/conf/nginx.conf) and save it under the folder **conf**

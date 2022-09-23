@@ -103,9 +103,9 @@ contribution guide](http://developer.exoplatform.org/#id-community-contributions
 > 🚧 Work in progress
 
 ## Customization Capabilities with eXo Platform
-> **Warning**
-> 🚧🛑 To rework
-
+::: warning
+🚧🛑 To rework
+:::
 eXo Platform can be easily customized and extended by:
 
 - Creating extensions that allows you to customize all resources of
