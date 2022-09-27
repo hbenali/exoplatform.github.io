@@ -43,8 +43,8 @@ module.exports = {
         link: '/guide/developer-guide/rest-api',
       },
       {
-        text: 'eXo website',
-        link: 'https://www.exoplatform.com'
+        text: 'Q&A',
+        link: 'https://github.com/exoplatform/exo-community/discussions'
       }
     ],
     sidebar: {
