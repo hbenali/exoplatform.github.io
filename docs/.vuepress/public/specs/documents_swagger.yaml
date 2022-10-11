@@ -141,6 +141,24 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
+  /v1/documents/canAddDocument:
+    get:
+      tags:
+      - /v1/documents
+      summary: check if the current user can add document
+      description: This checks if the current user can add document.
+      operationId: canAddDocument
+      parameters:
+      - name: spaceId
+        in: query
+        description: Space technical identifier
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
   /v1/documents/description:
     put:
       tags:
