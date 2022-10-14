@@ -31,6 +31,11 @@ paths:
         description: Parent folder technical identifier
         schema:
           type: string
+      - name: symlinkFolderId
+        in: query
+        description: Symlink technical identifier
+        schema:
+          type: string
       - name: folderPath
         in: query
         description: Parent folder path
@@ -700,6 +705,8 @@ components:
           type: string
         versionNumber:
           type: string
+        versionable:
+          type: boolean
         versionnedFileId:
           type: string
         versions:
