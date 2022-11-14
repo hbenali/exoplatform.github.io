@@ -344,6 +344,18 @@ paths:
         in: query
         schema:
           type: boolean
+      - name: allGroupsForAdmin
+        in: query
+        description: allGroupsForAdmin
+        schema:
+          type: boolean
+      - name: excludeParentGroup
+        in: query
+        description: List of excluded parent/type groups
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: Request fulfilled
