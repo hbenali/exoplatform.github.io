@@ -535,16 +535,18 @@ If you want to change the password validation in medium to high sensitivity cont
 ```properties
 
     # validators
-    gatein.validators.passwordpolicy.regexp=((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).\\{12,256\\})
+    gatein.validators.passwordpolicy.regexp=((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{12,256})
     gatein.validators.passwordpolicy.length.max=256
     gatein.validators.passwordpolicy.length.min=12
-    gatein.validators.passwordpolicy.format.message=Minimum of 1 digit, 1 lower case, 1 upper case, minimum of 12 chars.
+    gatein.validators.passwordpolicy.format.message=Minimum of 1 digit, 1 lower case, 1 upper case, minimum of 12 chars.    
+```
 
 If you want to change the password validation to use the strong level
 defined by ANSSI, you could use the following configuration :
 
+```properties
     # validators
-    gatein.validators.passwordpolicy.regexp=((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).\\{15,256\\})
+    gatein.validators.passwordpolicy.regexp=((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{15,256})
     gatein.validators.passwordpolicy.length.max=256
     gatein.validators.passwordpolicy.length.min=15
     gatein.validators.passwordpolicy.format.message=Minimum of 1 digit, 1 lower case, 1 upper case, minimum of 15 chars.
