@@ -99,6 +99,8 @@ contribution guide](http://developer.exoplatform.org/#id-community-contributions
 ::: tip Note
 To write your own extension, see [this sample project](https://github.com/exo-samples/docs-samples/tree/master/custom-extension).
 :::
+
+<!--
 ## How to contribute on eXo Platform
 > 🚧 Work in progress
 
@@ -157,4 +159,4 @@ small applications can be built quickly, and mashed up on the client
 side using lightweight Web-Oriented Architecture (WOA) technologies,
 like REST or RSS.
 
-
+-->
