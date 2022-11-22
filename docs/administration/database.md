@@ -52,7 +52,7 @@ Create 3 databases, one for IDM, one for JCR and one for JPA, or you can use the
   - `$IP` is your app server host name that accepts wildcard (for example, 192.168.1.% = all IPs on 192.168.1.x network).
   - `$username` and `$password` are credentials that eXo Platform will use to connect to the databases.
 
-## Configuring eXo Platform {#Database.ConfiguringPLF}
+## Configuring eXo Platform
 
 ::: warning
 By default, eXo Platform is connected to hsql database. This database could be used for testing purpose but it is not possible to use it in production environments.
