@@ -89,14 +89,14 @@ module.exports = {
                 '/guide/developer-guide/intermediate-integration/rest-service',
               ]
             },
-            {
-              title: 'Advanced Integration',
-              collapsable: true,
-              path: '/guide/developer-guide/advanced-integration/',
-              children: [
-                '/guide/developer-guide/advanced-integration/extension-points',
-              ]
-            },
+            //{
+            //  title: 'Advanced Integration',
+            //  collapsable: true,
+            //  path: '/guide/developer-guide/advanced-integration/',
+            //  children: [
+            //    '/guide/developer-guide/advanced-integration/extension-points',
+            //  ]
+            //},
             {
               title: 'REST API',
               collapsable: true,
