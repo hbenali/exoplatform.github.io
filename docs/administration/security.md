@@ -502,8 +502,6 @@ The following configuration examples will allow you to block the previously list
 ### Block sensitive Rest urls with Apache
 
 ```xml
-...
-
           # Block login history for performance and security reasons
           RewriteRule             "/rest/loginhistory/loginhistory/AllUsers"            - [L,NC,R=403]
           RewriteRule             "/rest/private/loginhistory/loginhistory/AllUsers/*"  - [L,NC,R=403]
@@ -514,7 +512,6 @@ The following configuration examples will allow you to block the previously list
           # Don't expose REST APIs listing 
           RewriteRule             "^/rest/?$"         -                   [NC,F,L]
           RewriteRule             "^/portal/rest/?$"  -                   [NC,F,L]
-              ...
 ```
 
 ### Block sensitive Rest urls with Nginx
@@ -522,8 +519,6 @@ The following configuration examples will allow you to block the previously list
 You can create redirection rules in several ways with nginx, this is one of the possibles :
 
 ```nginx
-    ...
-
           # Block login history for performance and security reasons
           location /rest/loginhistory/loginhistory/AllUsers { return 403; }
           location /rest/private/loginhistory/loginhistory/AllUsers { return 403; }
@@ -534,6 +529,4 @@ You can create redirection rules in several ways with nginx, this is one of the 
           # Don't expose REST APIs listing 
           location ~ ^/rest/?$ { return 403; }
           location ~ ^/portal/rest/?$ { return 403; }
-
-            ...
 ```
