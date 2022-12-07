@@ -4349,8 +4349,6 @@ components:
           type: boolean
         isSpaceRedactor:
           type: boolean
-        isSpacesManager:
-          type: boolean
         lastLoginTime:
           type: string
         lastUpdatedTime:
