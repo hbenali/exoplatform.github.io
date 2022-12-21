@@ -411,9 +411,9 @@ paths:
     get:
       tags:
       - v1/news/targeting
-      summary: Get all news targets by a giving type
-      description: Get all news targets by a giving type
-      operationId: getTargets
+      summary: Get all news targets
+      description: Get all news targets
+      operationId: getAllTargets
       responses:
         "200":
           description: Request fulfilled
@@ -441,20 +441,18 @@ paths:
           description: User not authorized to create news target
         "409":
           description: Conflict operation
-  /v1/news/targeting/referenced:
+  /v1/news/targeting/allowed:
     get:
       tags:
       - v1/news/targeting
-      summary: Get all news targets by a giving property
-      description: Get all news targets by a giving property
-      operationId: getReferencedTargets
+      summary: Get all allowed news targets of the current user
+      description: Get all allowed news targets of the current user
+      operationId: getAllowedTargets
       responses:
         "200":
           description: Request fulfilled
         "500":
           description: Internal server error
-        "401":
-          description: Unauthorized operation
   /v1/news/targeting/{originalTargetName}:
     put:
       tags:
