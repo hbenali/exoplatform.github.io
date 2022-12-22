@@ -4518,6 +4518,11 @@ components:
         totalBoundUsers:
           type: integer
           format: int64
+        unreadItems:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
         url:
           type: string
         visibility:
