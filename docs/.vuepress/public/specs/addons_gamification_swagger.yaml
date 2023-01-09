@@ -267,6 +267,13 @@ paths:
           items:
             type: integer
             format: int64
+      - name: period
+        in: query
+        description: "Challenge period filtering. Possible values: WEEK, MONTH, YEAR,\
+          \ ALL"
+        schema:
+          type: string
+          default: ALL
       responses:
         "200":
           description: Request fulfilled
