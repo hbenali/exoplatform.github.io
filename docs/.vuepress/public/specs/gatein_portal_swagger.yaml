@@ -605,6 +605,13 @@ paths:
           \ Header will be sent'"
         schema:
           type: string
+      - name: v
+        in: query
+        description: "The value of version parameter will determine whether the query\
+          \ should be cached by browser or not. If not set, no 'expires HTTP Header\
+          \ will be sent'"
+        schema:
+          type: string
       responses:
         "200":
           description: Branding logo retrieved
