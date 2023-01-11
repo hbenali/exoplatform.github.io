@@ -506,6 +506,11 @@ paths:
         schema:
           type: string
           default: ALL
+      - name: nodeId
+        in: query
+        description: parent navigation node id
+        schema:
+          type: string
       - name: visibility
         in: query
         description: "Multivalued visibilities of navigation nodes to retrieve, possible\

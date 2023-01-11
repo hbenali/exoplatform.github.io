@@ -660,6 +660,29 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
+  /wallet/api/reward/compute/user:
+    get:
+      tags:
+      - /wallet/api/reward
+      summary: Compute rewards of user wallet per a chosen period of time
+      description: returns a wallet reward object
+      operationId: computeRewardsByUser
+      parameters:
+      - name: date
+        in: query
+        description: A date with format yyyy-MM-dd
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
   /wallet/api/reward/countRewards:
     get:
       tags:
