@@ -1812,6 +1812,37 @@ paths:
           description: Internal server error
         "400":
           description: Invalid query input
+  /v1/social/spaces/layout/{appId}/{spaceId}:
+    put:
+      tags:
+      - v1/social/spaces
+      summary: Restores space Page Layout switch associated space template
+      description: "This operation will restores the default page layout of a designated\
+        \ space switch its space template as if it was a new space creation.The applications\
+        \ data will not be change, only the layout definition and structure of the\
+        \ page.This endpoint is accessible only for spaces managers."
+      operationId: restoreSpacePageLayout
+      parameters:
+      - name: appId
+        in: path
+        description: Space application identifier to reset. Can be 'home' or any page
+          name.
+        required: true
+        schema:
+          type: string
+      - name: spaceId
+        in: path
+        description: Space technical identifier
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "401":
+          description: User not authorized to call this endpoint
+        "500":
+          description: Internal server error
   /v1/social/spaces/{id}:
     get:
       tags:
