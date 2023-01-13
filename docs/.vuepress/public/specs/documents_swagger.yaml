@@ -54,6 +54,11 @@ paths:
         description: Search query entered by the user
         schema:
           type: string
+      - name: extendedSearch
+        in: query
+        description: extendedSearch
+        schema:
+          type: boolean
       - name: userId
         in: query
         description: userId
