@@ -1277,6 +1277,9 @@ components:
         priority:
           type: integer
           format: int32
+        rulesTotalScore:
+          type: integer
+          format: int64
         title:
           type: string
         type:
