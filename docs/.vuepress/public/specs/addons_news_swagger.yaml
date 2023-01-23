@@ -440,14 +440,14 @@ paths:
               $ref: '#/components/schemas/NewsTargetingEntity'
         required: true
       responses:
-        "400":
-          description: Invalid query input
-        "403":
-          description: Forbidden operation
         "401":
           description: User not authorized to create news target
+        "403":
+          description: Forbidden operation
         "409":
           description: Conflict operation
+        "500":
+          description: Internal server error
   /v1/news/targeting/allowed:
     get:
       tags:
@@ -482,14 +482,16 @@ paths:
               $ref: '#/components/schemas/NewsTargetingEntity'
         required: true
       responses:
-        "404":
-          description: Object not found
         "401":
           description: Unauthorized operation
-        "500":
-          description: Internal server error
+        "403":
+          description: Forbidden operation
+        "404":
+          description: Object not found
         "409":
           description: Conflict operation
+        "500":
+          description: Internal server error
   /v1/news/targeting/{targetName}:
     delete:
       tags:
@@ -897,6 +899,8 @@ components:
           items:
             type: string
             format: byte
+        illustrationMimeType:
+          type: string
         illustrationURL:
           type: string
         illustrationUpdateDate:
