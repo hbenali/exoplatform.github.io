@@ -541,6 +541,8 @@ paths:
       responses:
         "200":
           description: Request fulfilled
+        "304":
+          description: Resource not modified
         "500":
           description: Server error when retrieving branding information
     put:
@@ -555,7 +557,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Branding'
       responses:
-        "200":
+        "204":
           description: Branding information updated
         "500":
           description: Server error when updating branding information
@@ -581,20 +583,64 @@ paths:
           description: Branding css not modified
         "500":
           description: Server error when retrieving branding css
-  /v1/platform/branding/defaultLogo:
+  /v1/platform/branding/favicon:
     get:
       tags:
       - /v1/platform/branding
-      summary: Get Branding default logo
-      description: Get Branding default logo
-      operationId: getBrandingDefaultLogo
+      summary: Get Branding favicon
+      description: Get Branding favicon
+      operationId: getBrandingFavicon
+      parameters:
+      - name: lastModified
+        in: query
+        description: "The value of lastModified parameter will determine whether the\
+          \ query should be cached by browser or not. If not set, no 'expires HTTP\
+          \ Header will be sent'"
+        schema:
+          type: string
+      - name: v
+        in: query
+        description: "The value of version parameter will determine whether the query\
+          \ should be cached by browser or not. If not set, no 'expires HTTP Header\
+          \ will be sent'"
+        schema:
+          type: string
       responses:
         "200":
-          description: Branding default logo retrieved
+          description: Branding favicon retrieved
         "404":
-          description: Branding default logo not found
+          description: Branding favicon not found
         "500":
-          description: Server error when retrieving branding default logo
+          description: Server error when retrieving branding favicon
+  /v1/platform/branding/loginBackground:
+    get:
+      tags:
+      - /v1/platform/branding
+      summary: Get authentication pages left panel background
+      description: Get authentication pages left panel background
+      operationId: getLoginBackground
+      parameters:
+      - name: lastModified
+        in: query
+        description: "The value of lastModified parameter will determine whether the\
+          \ query should be cached by browser or not. If not set, no 'expires HTTP\
+          \ Header will be sent'"
+        schema:
+          type: string
+      - name: v
+        in: query
+        description: "The value of version parameter will determine whether the query\
+          \ should be cached by browser or not. If not set, no 'expires HTTP Header\
+          \ will be sent'"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fullfilled
+        "404":
+          description: Resource not found
+        "500":
+          description: Server error when retrieving resource
   /v1/platform/branding/logo:
     get:
       tags:
@@ -951,6 +997,25 @@ paths:
           description: Internal server error due to data encoding
 components:
   schemas:
+    Background:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: string
+            format: byte
+        fileId:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        updatedDate:
+          type: integer
+          format: int64
+        uploadId:
+          type: string
     Branding:
       type: object
       properties:
@@ -958,13 +1023,33 @@ components:
           type: string
         companyName:
           type: string
+        defaultLanguage:
+          type: string
+        favicon:
+          $ref: '#/components/schemas/Favicon'
         lastUpdatedTime:
           type: integer
           format: int64
+        loginBackground:
+          $ref: '#/components/schemas/Background'
+        loginBackgroundTextColor:
+          type: string
+        loginSubtitle:
+          type: object
+          additionalProperties:
+            type: string
+        loginTitle:
+          type: object
+          additionalProperties:
+            type: string
         logo:
           $ref: '#/components/schemas/Logo'
         siteName:
           type: string
+        supportedLanguages:
+          type: object
+          additionalProperties:
+            type: string
         themeColors:
           type: object
           additionalProperties:
@@ -991,6 +1076,25 @@ components:
           format: int32
       additionalProperties:
         type: object
+    Favicon:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: string
+            format: byte
+        fileId:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+        updatedDate:
+          type: integer
+          format: int64
+        uploadId:
+          type: string
     GroupImpl:
       type: object
       properties:
@@ -1016,6 +1120,9 @@ components:
           items:
             type: string
             format: byte
+        fileId:
+          type: integer
+          format: int64
         size:
           type: integer
           format: int64
