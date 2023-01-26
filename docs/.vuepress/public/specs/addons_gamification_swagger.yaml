@@ -30,6 +30,12 @@ paths:
         required: true
         schema:
           type: string
+      - name: type
+        in: query
+        description: "earner type, user or space"
+        schema:
+          type: string
+          default: USER
       - name: offset
         in: query
         description: Offset of result
@@ -1004,6 +1010,12 @@ paths:
         schema:
           type: boolean
           default: false
+      - name: expand
+        in: query
+        description: "Asking for a full representation of a specific subresource,\
+          \ ex: userAnnouncements"
+        schema:
+          type: string
       responses:
         "200":
           description: Request fulfilled
