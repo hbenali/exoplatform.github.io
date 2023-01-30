@@ -377,6 +377,11 @@ paths:
         description: new path
         schema:
           type: string
+      - name: conflictAction
+        in: query
+        description: conflict action name
+        schema:
+          type: string
       responses:
         "200":
           description: Request fulfilled
@@ -494,6 +499,11 @@ paths:
       - name: destPath
         in: query
         description: new path
+        schema:
+          type: string
+      - name: conflictAction
+        in: query
+        description: conflict action name
         schema:
           type: string
       responses:
