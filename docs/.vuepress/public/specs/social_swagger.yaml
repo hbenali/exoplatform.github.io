@@ -33,8 +33,6 @@ tags:
   description: Managing tags for any type of data
 - name: v1/social/users
   description: "Operations on users with their activities, connections and spaces"
-- name: v1/social/usersRelationships
-  description: Managing relationships of users
 paths:
   /v1/social/activities:
     get:
@@ -1182,7 +1180,7 @@ paths:
           type: string
       - name: identityId
         in: query
-        description: Identity id which is a UUID such as 40487b7e7f00010104499b339f056aa4
+        description: Identity id which is a UUID
         schema:
           type: string
       - name: offset
@@ -1214,6 +1212,36 @@ paths:
           description: Invalid query input
         "412":
           description: "Precondition failed, check your input params"
+    put:
+      tags:
+      - v1/social/relationships
+      summary: Updates a specific relationship by provided model
+      description: This updates the relationship if the authenticated user has permissions
+        to view the objects linked to this relationship.
+      operationId: updateRelationship
+      parameters:
+      - name: expand
+        in: query
+        description: Asking for a full representation of a specific subresource if
+          any
+        schema:
+          type: string
+      requestBody:
+        description: Relationship object to be updated
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/RelationshipEntity'
+        required: true
+      responses:
+        "200":
+          description: Request fulfilled
+        "204":
+          description: Request fulfilled with no content
+        "500":
+          description: Internal server error
+        "400":
+          description: Invalid query input
     post:
       tags:
       - v1/social/relationships
@@ -1239,8 +1267,33 @@ paths:
       responses:
         "200":
           description: Request fulfilled
+        "204":
+          description: Request fulfilled and no content
         "500":
           description: Internal server error
+        "400":
+          description: Invalid query input
+    delete:
+      tags:
+      - v1/social/relationships
+      summary: Deletes a specific relationship by id
+      description: This deletes the relationship if the authenticated user has permissions
+        to view the objects linked to this relationship.
+      operationId: deleteRelationship
+      requestBody:
+        description: Relationship object to be updated
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/RelationshipEntity'
+        required: true
+      responses:
+        "204":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+        "401":
+          description: Unauthorized operation
         "400":
           description: Invalid query input
   /v1/social/relationships/{id}:
@@ -1301,6 +1354,8 @@ paths:
       responses:
         "200":
           description: Request fulfilled
+        "204":
+          description: Request fulfilled with no content
         "500":
           description: Internal server error
         "400":
@@ -1319,17 +1374,13 @@ paths:
         required: true
         schema:
           type: string
-      - name: expand
-        in: query
-        description: Asking for a full representation of a specific subresource if
-          any
-        schema:
-          type: string
       responses:
-        "200":
+        "204":
           description: Request fulfilled
         "500":
           description: Internal server error
+        "401":
+          description: Unauthorized operation
         "400":
           description: Invalid query input
   /v1/social/search:
@@ -2852,6 +2903,75 @@ paths:
           description: Request fulfilled
         "400":
           description: Invalid query input
+  /v1/social/users/advancedfilter:
+    post:
+      tags:
+      - v1/social/users
+      summary: Gets all users or connections by advanced filter
+      operationId: getUsersOrConnectionsByAdvancedFilter
+      parameters:
+      - name: userType
+        in: query
+        description: "User type to filter, ex: internal, external"
+        schema:
+          type: string
+          default: internal
+      - name: filterType
+        in: query
+        description: "Filter type to filter , ex all , connection"
+        schema:
+          type: string
+          default: all
+      - name: isDisabled
+        in: query
+        description: Is disabled users
+        schema:
+          type: boolean
+          default: false
+      - name: offset
+        in: query
+        description: Offset
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: limit
+        in: query
+        description: Limit
+        schema:
+          type: integer
+          format: int32
+          default: 20
+      - name: returnSize
+        in: query
+        description: Returning the number of users found or not
+        schema:
+          type: boolean
+          default: false
+      - name: expand
+        in: query
+        description: Asking for a full representation of a specific subresource if
+          any
+        schema:
+          type: string
+      requestBody:
+        description: pam user settings profile
+        content:
+          '*/*':
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+        required: true
+      responses:
+        "200":
+          description: Request fulfilled
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error due to data encoding
+        "400":
+          description: Invalid query input
   /v1/social/users/bulk/{action}:
     patch:
       tags:
@@ -3357,7 +3477,7 @@ paths:
       - v1/social/users
       summary: Update set of properties in user profile
       description: This can only be done by the logged in user.
-      operationId: updateUserProfileAttributes
+      operationId: updateUserProfileAttributes_1
       parameters:
       - name: id
         in: path
@@ -3371,6 +3491,38 @@ paths:
           '*/*':
             schema:
               $ref: '#/components/schemas/ProfileEntity'
+        required: true
+      responses:
+        "204":
+          description: Request fulfilled but not content returned
+        "500":
+          description: Internal server error due to data encoding
+        "403":
+          description: Unothorized to modify user profile
+        "400":
+          description: Invalid query input
+  /v1/social/users/{id}/profile/properties:
+    patch:
+      tags:
+      - v1/social/users
+      summary: Update set of properties in user profile
+      description: This can only be done by the logged in user.
+      operationId: updateUserProfileAttributes
+      parameters:
+      - name: id
+        in: path
+        description: User name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: User profile attributes map
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProfilePropertySettingEntity'
         required: true
       responses:
         "204":
@@ -3481,293 +3633,6 @@ paths:
           description: default response
           content:
             '*/*': {}
-  /v1/social/usersRelationships:
-    get:
-      tags:
-      - v1/social/usersRelationships
-      summary: Gets all user relationships
-      description: "This returns a list of relationships in the following cases: <br/><ul><li>if\
-        \ the query param \"user\" is not defined: returns the relationships of the\
-        \ authenticated user</li><li>if the \"user\" is defined and the authenticated\
-        \ user is not an administrator: returns the relationships of the authenticated\
-        \ user</li><li>if the \"user\" is defined and the authenticated user is an\
-        \ administrator: returns the relationships of the defined user</li><li>if\
-        \ the \"others\" is defined: returns the relationships between the user and\
-        \ the users defined in \"others\" only</li></ul>"
-      operationId: getUsersRelationships
-      parameters:
-      - name: status
-        in: query
-        description: "Specific status of relationships: pending, confirmed or all"
-        schema:
-          type: string
-          default: all
-      - name: user
-        in: query
-        description: User name to get relationships
-        schema:
-          type: string
-      - name: others
-        in: query
-        description: Usernames of the others users to get relationships with the given
-          user
-        schema:
-          type: string
-      - name: offset
-        in: query
-        description: Offset
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: limit
-        in: query
-        description: Limit
-        schema:
-          type: integer
-          format: int32
-          default: 20
-      - name: returnSize
-        in: query
-        description: Returning the number of relationships or not
-        schema:
-          type: boolean
-          default: false
-      - name: expand
-        in: query
-        description: "Asking for a full representation of a specific subresource,\
-          \ ex: sender or receiver"
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
-    put:
-      tags:
-      - v1/social/usersRelationships
-      summary: Updates a specific relationship of two users. One of them must be the
-        current user.
-      description: Return updated relationship
-      operationId: updateUsersRelationship
-      parameters:
-      - name: expand
-        in: query
-        description: "Asking for a full representation of a specific subresource,\
-          \ ex: sender or receiver"
-        schema:
-          type: string
-      requestBody:
-        description: Relationship object to be updated
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/RelationshipEntity'
-        required: true
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
-    post:
-      tags:
-      - v1/social/usersRelationships
-      summary: Creates a relationship between two specific users
-      description: "This creates the relationship in the following cases: <br/><ul><li>the\
-        \ sender or the receiver of the user relationship is the authenticated user</li><li>the\
-        \ authenticated user is in the group /platform/administrators</li></ul>"
-      operationId: createUsersRelationships
-      parameters:
-      - name: expand
-        in: query
-        description: "Asking for a full representation of a specific subresource,\
-          \ ex: sender or receiver"
-        schema:
-          type: string
-      requestBody:
-        description: "Relationship object to be created, required fields: <br/>sender\
-          \ - user name of the sender,<br/>receiver - user name of the receiver,<br/>status\
-          \ - pending or confirmed"
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/RelationshipEntity'
-        required: true
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
-  /v1/social/usersRelationships/{id}:
-    get:
-      tags:
-      - v1/social/usersRelationships
-      summary: Gets a specific relationship of user by id
-      description: "This returns the relationship in the following cases: <br/><ul><li>the\
-        \ sender or the receiver of the user relationship is the authenticated user</li><li>the\
-        \ authenticated user is in the group /platform/administrators</li></ul>"
-      operationId: getUsersRelationshipsById
-      parameters:
-      - name: id
-        in: path
-        description: Relationship id
-        required: true
-        schema:
-          type: string
-      - name: expand
-        in: query
-        description: "Asking for a full representation of a specific subresource,\
-          \ ex: sender or receiver"
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
-      deprecated: true
-    put:
-      tags:
-      - v1/social/usersRelationships
-      summary: Updates a specific relationship of user by id
-      description: "This updates the relationship in the following cases: <br/><ul><li>the\
-        \ sender or the receiver of the user relationship is the authenticated user</li><li>the\
-        \ authenticated user is in the group /platform/administrators</li></ul>"
-      operationId: updateUsersRelationshipsById
-      parameters:
-      - name: id
-        in: path
-        description: Relationship id
-        required: true
-        schema:
-          type: string
-      - name: expand
-        in: query
-        description: "Asking for a full representation of a specific subresource,\
-          \ ex: sender or receiver"
-        schema:
-          type: string
-      requestBody:
-        description: Relationship object to be updated
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/RelationshipEntity'
-        required: true
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
-      deprecated: true
-    delete:
-      tags:
-      - v1/social/usersRelationships
-      summary: Deletes a specific relationship of user by id
-      description: "This deletes the relationship in the following cases: <br/><ul><li>the\
-        \ sender or the receiver of the user relationship is the authenticated user</li><li>the\
-        \ authenticated user is in the group /platform/administrators</li></ul>"
-      operationId: deleteUsersRelationshipsById
-      parameters:
-      - name: id
-        in: path
-        description: Relationship id
-        required: true
-        schema:
-          type: string
-      - name: expand
-        in: query
-        description: Asking for a full representation of a specific subresource if
-          any
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
-      deprecated: true
-  /v1/social/usersRelationships/{sender}/{receiver}:
-    get:
-      tags:
-      - v1/social/usersRelationships
-      summary: Gets a specific relationship of user with another user
-      description: "This returns the relationship in the following cases: <br/><ul><li>the\
-        \ sender or the receiver of the user relationship is the authenticated user</li><li>the\
-        \ authenticated user is in the group /platform/administrators</li></ul>"
-      operationId: getUsersRelationship
-      parameters:
-      - name: sender
-        in: path
-        description: Relationship id
-        required: true
-        schema:
-          type: string
-      - name: receiver
-        in: path
-        description: Relationship id
-        required: true
-        schema:
-          type: string
-      - name: expand
-        in: query
-        description: "Asking for a full representation of a specific subresource,\
-          \ ex: sender or receiver"
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
-    delete:
-      tags:
-      - v1/social/usersRelationships
-      summary: Deletes a specific relationship of two users.One of them must be currrent
-        user
-      description: Return the deleted relationship
-      operationId: deleteUsersRelationship
-      parameters:
-      - name: sender
-        in: path
-        description: Relationship sender
-        required: true
-        schema:
-          type: string
-      - name: receiver
-        in: path
-        description: Relationship receiver
-        required: true
-        schema:
-          type: string
-      - name: expand
-        in: query
-        description: "Asking for a full representation of a specific subresource,\
-          \ ex: sender or receiver"
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
 components:
   schemas:
     ActivityEntity:
@@ -4431,8 +4296,64 @@ components:
             $ref: '#/components/schemas/URLEntity'
         username:
           type: string
+    ProfileLabel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        label:
+          type: string
+        language:
+          type: string
+        objectId:
+          type: string
+        objectType:
+          type: string
     ProfileLoader:
       type: object
+    ProfilePropertySettingEntity:
+      type: object
+      properties:
+        active:
+          type: boolean
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilePropertySettingEntity'
+        editable:
+          type: boolean
+        groupSynchronizationEnabled:
+          type: boolean
+        groupSynchronized:
+          type: boolean
+        id:
+          type: integer
+          format: int64
+        internal:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfileLabel'
+        multiValued:
+          type: boolean
+        order:
+          type: integer
+          format: int64
+        parentId:
+          type: integer
+          format: int64
+        propertyName:
+          type: string
+        required:
+          type: boolean
+        resolvedLabel:
+          type: string
+        value:
+          type: string
+        visible:
+          type: boolean
     RelationshipEntity:
       type: object
       properties:
