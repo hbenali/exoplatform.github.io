@@ -1852,6 +1852,8 @@ components:
           type: string
         profession:
           type: string
+        properties:
+          type: string
         relationshipStatus:
           type: string
         spacesCount:
