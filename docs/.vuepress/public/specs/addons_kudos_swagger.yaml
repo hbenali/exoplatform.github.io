@@ -380,6 +380,32 @@ paths:
           description: Invalid query input
         "500":
           description: Internal server error
+  /kudos/api/kudos/{kudosId}:
+    delete:
+      tags:
+      - /kudos/api/kudos
+      summary: Cancels a sent kudos
+      description: Cancels a sent kudos
+      operationId: deleteKudos
+      parameters:
+      - name: kudosId
+        in: path
+        description: Kudos technical identifier
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Request fulfilled
+        "404":
+          description: Object not found
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
   /kudos/api/settings:
     get:
       tags:

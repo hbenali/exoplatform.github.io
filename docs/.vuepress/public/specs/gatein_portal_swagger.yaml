@@ -453,6 +453,21 @@ paths:
       summary: Gets navigations
       description: Gets navigations
       operationId: getSiteNavigation
+      parameters:
+      - name: offset
+        in: query
+        description: Offset
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: limit
+        in: query
+        description: "Limit, if equals to 0, it will use default limit."
+        schema:
+          type: integer
+          format: int32
+          default: 20
       responses:
         "200":
           description: Request fulfilled
@@ -486,11 +501,6 @@ paths:
         in: path
         description: "Portal site type, possible values: PORTAL, GROUP or USER"
         required: true
-        schema:
-          type: string
-      - name: exclude
-        in: query
-        description: Site names regex to exclude from results
         schema:
           type: string
       - name: siteName
