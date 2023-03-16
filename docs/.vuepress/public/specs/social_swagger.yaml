@@ -4013,6 +4013,8 @@ components:
           type: boolean
         enable:
           type: boolean
+        external:
+          type: boolean
         globalId:
           $ref: '#/components/schemas/GlobalId'
         id:
