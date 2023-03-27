@@ -2799,7 +2799,8 @@ paths:
         \ the visible online users who are member of space with id=1.The params \"\
         status\" and \"spaceId\" cannot be used with \"q\" param since it will falsify\
         \ the \"limit\" param which is 20 by default. If these 3 parameters are used\
-        \ together, the parameter \"q\" will be ignored"
+        \ together, the parameter \"q\" will be ignored,the current user \"excludeCurrentUser\"\
+        \ will be excluded"
       operationId: getUsers
       parameters:
       - name: q
@@ -2866,6 +2867,12 @@ paths:
           any
         schema:
           type: string
+      - name: excludeCurrentUser
+        in: query
+        description: the current user will be excluded in the list
+        schema:
+          type: boolean
+          default: false
       responses:
         "200":
           description: Request fulfilled
