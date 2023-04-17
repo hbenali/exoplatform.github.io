@@ -151,6 +151,119 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
+  /v1/documents/bulk/cancel/{actionId}:
+    get:
+      tags:
+      - /v1/documents
+      summary: cancel bulk action
+      description: Cancel bulk action.
+      operationId: cancelBulkAction
+      parameters:
+      - name: actionId
+        in: path
+        description: List items
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "403":
+          description: Unauthorized operation
+        "404":
+          description: Resource not found
+  /v1/documents/bulk/download/{actionId}:
+    get:
+      tags:
+      - /v1/documents
+      summary: Download zipped list of files
+      description: This download a zipped list of files.
+      operationId: getDownloadZip
+      parameters:
+      - name: actionId
+        in: path
+        description: List items
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "403":
+          description: Unauthorized operation
+        "404":
+          description: Resource not found
+    post:
+      tags:
+      - /v1/documents
+      summary: download list of documents
+      description: This download a list of documents
+      operationId: downloadDocuments
+      parameters:
+      - name: actionId
+        in: path
+        description: action ID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: documents List
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AbstractNodeEntity'
+        required: true
+      responses:
+        "200":
+          description: Documents downloaded
+        "400":
+          description: Invalid query input
+        "401":
+          description: User not authorized to download the documents
+        "500":
+          description: Internal server error
+  /v1/documents/bulk/{actionId}:
+    delete:
+      tags:
+      - /v1/documents
+      summary: Delete list of documents
+      description: This deletes a list of documents
+      operationId: bulkDeleteDocuments
+      parameters:
+      - name: actionId
+        in: path
+        description: action ID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: documents List
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AbstractNodeEntity'
+        required: true
+      responses:
+        "200":
+          description: Document deleted
+        "400":
+          description: Invalid query input
+        "401":
+          description: User not authorized to delete the document
+        "500":
+          description: Internal server error
   /v1/documents/canAddDocument:
     get:
       tags:
@@ -483,6 +596,17 @@ paths:
           description: Unauthorized operation
         "404":
           description: Resource not found
+  /v1/documents/settings:
+    get:
+      tags:
+      - /v1/documents
+      summary: Get User documents settings
+      operationId: getSettings
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
   /v1/documents/shortcut:
     post:
       tags:
@@ -664,6 +788,57 @@ paths:
           description: Forbidden operation
 components:
   schemas:
+    AbstractNodeEntity:
+      type: object
+      properties:
+        acl:
+          $ref: '#/components/schemas/NodePermissionEntity'
+        auditTrails:
+          $ref: '#/components/schemas/NodeAuditTrailsEntity'
+        cloudDriveFile:
+          type: boolean
+        cloudDriveFolder:
+          type: boolean
+        createdDate:
+          type: integer
+          format: int64
+        creatorIdentity:
+          $ref: '#/components/schemas/IdentityEntity'
+        datasource:
+          type: string
+        description:
+          type: string
+        favorite:
+          type: boolean
+        folder:
+          type: boolean
+        id:
+          type: string
+        metadatas:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/MetadataItemEntity'
+        modifiedDate:
+          type: integer
+          format: int64
+        modifierIdentity:
+          $ref: '#/components/schemas/IdentityEntity'
+        name:
+          type: string
+        ownerIdentity:
+          $ref: '#/components/schemas/IdentityEntity'
+        parentFolderId:
+          type: string
+        path:
+          type: string
+        sourceID:
+          type: string
+        versionNumber:
+          type: string
+        versionable:
+          type: boolean
     FileNodeEntity:
       type: object
       properties:
