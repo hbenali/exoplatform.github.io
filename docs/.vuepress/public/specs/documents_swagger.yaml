@@ -231,6 +231,50 @@ paths:
           description: User not authorized to download the documents
         "500":
           description: Internal server error
+  /v1/documents/bulk/move/{actionId}:
+    put:
+      tags:
+      - /v1/documents
+      summary: move list of documents to specific path
+      description: This moves a list of documents
+      operationId: moveDocuments
+      parameters:
+      - name: actionId
+        in: path
+        description: action ID
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: ownerId
+        in: query
+        description: ownerId
+        schema:
+          type: integer
+          format: int64
+      - name: destPath
+        in: query
+        description: new path
+        schema:
+          type: string
+      requestBody:
+        description: documents List
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AbstractNodeEntity'
+        required: true
+      responses:
+        "200":
+          description: Documents moved
+        "400":
+          description: Invalid query input
+        "401":
+          description: User not authorized
+        "500":
+          description: Internal server error
   /v1/documents/bulk/{actionId}:
     delete:
       tags:
@@ -282,6 +326,36 @@ paths:
           description: Request fulfilled
         "400":
           description: Invalid query input
+  /v1/documents/createNewVersion:
+    put:
+      tags:
+      - /v1/documents
+      summary: Creates a new version of a document from an input stream
+      description: Creates a new version of a document from an input stream
+      operationId: createNewVersion
+      parameters:
+      - name: nodeId
+        in: query
+        description: target file node identifier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: New content
+        content:
+          '*/*':
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
   /v1/documents/description:
     put:
       tags:
