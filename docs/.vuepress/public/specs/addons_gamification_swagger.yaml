@@ -464,6 +464,12 @@ paths:
         schema:
           type: string
           default: ENABLED
+      - name: ownerId
+        in: query
+        description: owner id
+        schema:
+          type: integer
+          format: int64
       - name: sortByBudget
         in: query
         description: "If true, this will return the filtered domains sorted by budget.\
