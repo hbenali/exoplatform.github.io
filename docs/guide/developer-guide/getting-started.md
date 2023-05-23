@@ -6,7 +6,7 @@ This guideline helps developers to set up their development environment (SCM, ID
 
 To set up development environment, see the followings:
 
-- JDK 11+ is required.
+- JDK 17 is required.
 - [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html) (3.6 or later) and [Git](#git-and-github-com) are required to developers who want to contribute to eXo projects (mainly the company’s developers).
 - Any Java IDE tool can be used, such as [Eclipse](https://www.eclipse.org), [NetBean](https://netbeans.org).
 - Developers who write extensions are free to choose their favorite tools. Maven and GIT are recommended to get the best support from eXo Company and Community.
