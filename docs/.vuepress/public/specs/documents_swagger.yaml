@@ -105,6 +105,35 @@ paths:
         schema:
           type: boolean
           default: false
+      - name: fileType
+        in: query
+        description: fileType
+        schema:
+          type: string
+      - name: afterDate
+        in: query
+        description: afterDate
+        schema:
+          type: integer
+          format: int64
+      - name: beforDate
+        in: query
+        description: beforDate
+        schema:
+          type: integer
+          format: int64
+      - name: minSize
+        in: query
+        description: minSize
+        schema:
+          type: integer
+          format: int64
+      - name: maxSize
+        in: query
+        description: maxSize
+        schema:
+          type: integer
+          format: int64
       responses:
         "200":
           description: Request fulfilled
@@ -670,12 +699,45 @@ paths:
           description: Unauthorized operation
         "404":
           description: Resource not found
-  /v1/documents/settings:
+  /v1/documents/settings/{ownerId}:
     get:
       tags:
       - /v1/documents
       summary: Get User documents settings
       operationId: getSettings
+      parameters:
+      - name: ownerId
+        in: path
+        description: "Identity technical identifier, required = true"
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+  /v1/documents/settings/{ownerId}/{view}:
+    post:
+      tags:
+      - /v1/documents
+      summary: Set the user default view settings
+      operationId: setDefaultView
+      parameters:
+      - name: view
+        in: path
+        description: view
+        required: true
+        schema:
+          type: string
+      - name: ownerId
+        in: path
+        description: Identity technical identifier
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
         "200":
           description: Request fulfilled
