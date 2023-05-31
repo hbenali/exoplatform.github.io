@@ -66,8 +66,8 @@ The project custom-extension is a template for an eXo platform extension. We use
 The project consists of 2 modules :
 
 1.  Services modules : You use this module for all services and plugins (Java classes) that you will develop. Once built, this module will generate a jar archive that you will deploy under the **lib** folder of your eXo platform server.
-    - ``` webapp/src/pom.xml ``` : Maven descriptor that will be used to build the library of the extension services 
-    - ``` webapp/src/main/java/ ``` : You create your packages and java classes inside this folder to be built and added to the resulting jar archive. We put a file **SampleService.java** to be used as example of services that are deployed in eXo platform server
+    - ``` services/pom.xml ``` : Maven descriptor that will be used to build the library of the extension services 
+    - ``` services/src/main/java/ ``` : You create your packages and java classes inside this folder to be built and added to the resulting jar archive. We put a file **SampleService.java** to be used as example of services that are deployed in eXo platform server
 
 
 2.  Webapp module : you use this module to add configuration for all services that you developed. You could use it also to alter default configurations of built-in services.
