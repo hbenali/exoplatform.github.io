@@ -12,7 +12,7 @@ It is an implementation of the interface **org.exoplatform.services.listener.Lis
 There are a list of predefined events in the platform. You will use the login event as an example for this exercise.
 This section will walk you through a complete sample extension that instructs you how to build your first event listener :
 1.  Create a new project based on [the template](https://github.com/exo-samples/docs-samples/tree/master/custom-extension) of eXo platform extension
-2.  Create a new class LoginEventListener.java under a new package named **org.exoplatform.samples.listener** : 
+2.  Create a new class LoginEventListener.java under a new package named **org.exoplatform.samples.listener** in `services` module : 
     ```java
       package org.exoplatform.samples.listeners;
 
@@ -42,7 +42,7 @@ This section will walk you through a complete sample extension that instructs yo
         }
       }
     ```
-3.  Add the needed configuration to activate this listener, and specify the name of the event that it will be listening to :
+3.  Add the needed configuration to activate this listener, and specify the name of the event that it will be listening to, by creating file `configuration.xml in $EXO_HOME/sources/custom-extension/services/src/main/resources/conf/portal/` :
     ```xml
       <?xml version="1.0" encoding="UTF-8"?>
       <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
