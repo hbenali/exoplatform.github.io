@@ -145,7 +145,44 @@ Replace the existing  `external-component-plugin` by
 
 This xml configuration tells the portal to insert the gtmpl `.MoodOfTheDayActivityExtension.gtmpl` in the dynamic container `UIPortalApplication-End-Body` when loading the portal. The gtmpl loads the javascript file which loads our activity type extension. 
 
+## Build the vue file, and declare the generated js file
 
+Update file `$EXO_HOME/sources/docs-sample/activity-extensions/webpack.prod.js` by add the line about our new js file :
+
+```js
+  entry: {
+    activityType: './src/main/webapp/vue-apps/activity-type/main.js',
+    activityBody: './src/main/webapp/vue-apps/activity-body/main.js',
+    activityMenuItem: './src/main/webapp/vue-apps/activity-menu-item/main.js',
+    activityAction: './src/main/webapp/vue-apps/activity-action/main.js',
+    commentBody: './src/main/webapp/vue-apps/comment-body/main.js',
+    commentMenuItem: './src/main/webapp/vue-apps/comment-menu-item/main.js',
+    commentAction: './src/main/webapp/vue-apps/comment-action/main.js',
+    moodOfTheDayActivityType: './src/main/webapp/vue-apps/mood-of-the-day-activity-type/main.js'
+  },
+```
+This modification allows to build our new vue file on module compilation. It generates a js file from the vue file.
+
+Finally, update the file `$EXO_HOME/sources/docs-sample/activity-extensions/src/main/webapp/WEB-INF/gatein-resources.xml` by adding :
+```xml
+<module>
+  <name>moodOfTheDayActivityType</name>
+  <script>
+    <minify>false</minify>
+    <path>/js/moodOfTheDayActivityType.bundle.js</path>
+  </script>
+  <depends>
+    <module>vue</module>
+  </depends>
+  <depends>
+    <module>vuetify</module>
+  </depends>
+  <depends>
+    <module>extensionRegistry</module>
+  </depends>
+</module>
+```
+This modification will declare the generated js file as a javascript module, which can be loaded in html, in order to load the vue component. It is used in the file MoodOfTheDayActivityExtension.gtmpl.
 
 ## Deploy the extension
 
