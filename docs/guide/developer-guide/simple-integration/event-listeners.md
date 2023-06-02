@@ -42,12 +42,8 @@ This section will walk you through a complete sample extension that instructs yo
         }
       }
     ```
-3.  Add the needed configuration to activate this listener, and specify the name of the event that it will be listening to, by creating file `configuration.xml` in `$EXO_HOME/sources/custom-extension/services/src/main/resources/conf/portal/` :
+3.  Add the needed configuration to activate this listener, and specify the name of the event that it will be listening to, by adding this configuration in file `configuration.xml` in `$EXO_HOME/sources/custom-extension/webapp/src/main/WEB-INF/conf/` :
     ```xml
-      <?xml version="1.0" encoding="UTF-8"?>
-      <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd"
-      xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
         <!-- register new event listener that will be fired when a user logs in-->
         <external-component-plugins>
           <!-- The service ListenerService registers all listeners with their respective event names -->
@@ -61,8 +57,6 @@ This section will walk you through a complete sample extension that instructs yo
             <type>org.exoplatform.samples.listener.LoginEventListener</type>
           </component-plugin>
         </external-component-plugins>
-      </configuration>
-
     ```          
 
 4.  Build the project using Maven :
