@@ -42,34 +42,50 @@ This section will walk you through a complete sample extension that instructs yo
         }
       }
     ```
-3.  Add the needed configuration to activate this listener, and specify the name of the event that it will be listening to, by adding this configuration in file `configuration.xml` in `$EXO_HOME/sources/custom-extension/webapp/src/main/WEB-INF/conf/` :
-    ```xml
-        <!-- register new event listener that will be fired when a user logs in-->
-        <external-component-plugins>
-          <!-- The service ListenerService registers all listeners with their respective event names -->
-          <target-component>org.exoplatform.services.listener.ListenerService</target-component>
-          <component-plugin>
-            <!-- The event name, it identifies an event, we can have many listeners for the same event -->
-            <name>exo.core.security.ConversationRegistry.register</name>
-            <!-- This is the function in ListenerService called to register each new listener -->
-            <set-method>addListener</set-method>
-            <!-- Here you put the FQN of the new listener -->
-            <type>org.exoplatform.samples.listener.LoginEventListener</type>
-          </component-plugin>
-        </external-component-plugins>
-    ```          
+3.  In file `$EXO_HOME/sources/custom-extension/services/pom.xml`, add needed dependencies : 
+```xml
+<dependencies>
+  <dependency>
+    <groupId>org.exoplatform.kernel</groupId>
+    <artifactId>exo.kernel.component.common</artifactId>
+    <scope>provided</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.exoplatform.core</groupId>
+    <artifactId>exo.core.component.security.core</artifactId>
+    <scope>provided</scope>
+  </dependency>
+</dependencies>
+```       
 
-4.  Build the project using Maven :
+4. Add the needed configuration to activate this listener, and specify the name of the event that it will be listening to, by adding this configuration in file `configuration.xml` in `$EXO_HOME/sources/custom-extension/webapp/src/main/WEB-INF/conf/` :
+```xml
+    <!-- register new event listener that will be fired when a user logs in-->
+    <external-component-plugins>
+      <!-- The service ListenerService registers all listeners with their respective event names -->
+      <target-component>org.exoplatform.services.listener.ListenerService</target-component>
+      <component-plugin>
+        <!-- The event name, it identifies an event, we can have many listeners for the same event -->
+        <name>exo.core.security.ConversationRegistry.register</name>
+        <!-- This is the function in ListenerService called to register each new listener -->
+        <set-method>addListener</set-method>
+        <!-- Here you put the FQN of the new listener -->
+        <type>org.exoplatform.samples.listener.LoginEventListener</type>
+      </component-plugin>
+    </external-component-plugins>
+```          
+
+5. Build the project using Maven :
 ```shell
    cd $EXO_HOME/sources/sample-event-listener 
    mvn package
 ```
-5.  Copy the built jar and war files to their destination folders inside the $EXO_HOME 
+6. Copy the built jar and war files to their destination folders inside the $EXO_HOME 
 ```shell
    cp services/target/sample-notification-services.jar $EXO_HOME/lib/sample-notification-services.jar
    cp webapp/target/sample-notification-webapp.war $EXO_HOME/webapps
 ```    
-6.  Deploy both files inside the eXo platform container, using the volumes section in **docker-compose.yml** :
+7. Deploy both files inside the eXo platform container, using the volumes section in **docker-compose.yml** :
 ```shell
        volumes:
          - exo_data:/srv/exo
@@ -77,11 +93,11 @@ This section will walk you through a complete sample extension that instructs yo
          - $EXO_HOME/lib/sample-event-listeners.jar:/opt/exo/lib/sample-event-listeners.jar
          - $EXO_HOME/webapps/event-listeners-webapp.war:/opt/exo/webapps/event-listeners-webapp.war
 ```
-7.  Start eXo platform : 
+8. Start eXo platform : 
 ```shell
    docker-compose -f /path/to/docker-compose.yml up
 ```
-8.  If the above steps are successfully applied, you should see a new line in docker logs :
+9. If the above steps are successfully applied, you should see a new line in docker logs :
 ```
 exo_1      | 2022-09-28 20:36:23,202 | INFO  | An event was received from class org.exoplatform.services.security.ConversationRegistry : The user haroun was logged in [o.e.samples.listener.LoginEventListener<http-nio-0.0.0.0-8080-exec-2>] 
 ``` 
