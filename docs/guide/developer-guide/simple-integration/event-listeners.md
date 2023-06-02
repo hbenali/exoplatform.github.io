@@ -42,7 +42,7 @@ This section will walk you through a complete sample extension that instructs yo
         }
       }
     ```
-3.  Add the needed configuration to activate this listener, and specify the name of the event that it will be listening to, by creating file `configuration.xml in $EXO_HOME/sources/custom-extension/services/src/main/resources/conf/portal/` :
+3.  Add the needed configuration to activate this listener, and specify the name of the event that it will be listening to, by creating file `configuration.xml` in `$EXO_HOME/sources/custom-extension/services/src/main/resources/conf/portal/` :
     ```xml
       <?xml version="1.0" encoding="UTF-8"?>
       <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
