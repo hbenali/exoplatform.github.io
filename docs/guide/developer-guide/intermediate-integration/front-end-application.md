@@ -292,7 +292,7 @@ This is the structure for our project, it consists of 2 parts :
             <import>war:/conf/custom-extension/bundle-configuration.xml</import>
           </configuration>
       ```
-     -  ```src/main/webapp/WEB-INF/conf/custom-extension/bundle-configuration.xml``` : Configuration for the resource bundle files that will be added to the resource bundles of the site to provide internationalization of text
+       -  ```src/main/webapp/WEB-INF/conf/custom-extension/bundle-configuration.xml``` : Configuration for the resource bundle files that will be added to the resource bundles of the site to provide internationalization of text
         ```xml
           <?xml version="1.0" encoding="UTF-8"?>
           <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_3.xsd http://www.exoplatform.org/xml/ns/kernel_1_3.xsd"
@@ -309,6 +309,11 @@ This is the structure for our project, it consists of 2 parts :
                 <!-- type of the plugin -->
                 <type>org.exoplatform.services.resources.impl.BaseResourceBundlePlugin</type>
                 <init-params>
+                  <values-param>
+                    <name>init.resources</name>
+                    <description>Store the following resources into the db for the first launch</description>
+                    <value>locale.addon.Sample</value>
+                  </values-param>
                   <!-- this resource bundle will be added to the portal (site) resource bundles-->
                   <values-param>
                     <name>portal.resource.names</name>
