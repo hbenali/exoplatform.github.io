@@ -64,189 +64,188 @@ This is the structure for our project, it consists of 2 parts :
       ┗ 📜webpack.watch.js
     ```
 
-1.  Here is the list of files that will create tha application (portlet) : 
-    -  ```src/main/webapp/WEB-INF/portlet.xml``` : XML descriptor for portlets, mandatory when we have portlets in the webapp. it contains the basic information about the application : name, resource-bundles location, portlet class, etc ...
-       ```xml
-          <portlet-app version="2.0" xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-          xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
+   1.  Here is the list of files that will create tha application (portlet) : 
+       -  ```src/main/webapp/WEB-INF/portlet.xml``` : XML descriptor for portlets, mandatory when we have portlets in the webapp. it contains the basic information about the application : name, resource-bundles location, portlet class, etc ...
+          ```xml
+             <portlet-app version="2.0" xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
 
-            <!-- block to define a new portlet-->
-            <portlet>
-              <!-- Portlet name -->
-              <portlet-name>vueWebpackSample</portlet-name>
-              <!-- Portlet class -->
-              <portlet-class>org.exoplatform.commons.api.portlet.GenericDispatchedViewPortlet</portlet-class>
-              <!-- Parameters needed to initiate the portlet. In this case the path to the HTML file of the VueJS application -->
-              <init-param>
-                <name>portlet-view-dispatched-file-path</name>
-                <value>/index.html</value>
-              </init-param>
-              <!-- supported mimetypes -->
-              <supports>
-                <mime-type>text/html</mime-type>
-              </supports>
-              <!-- Extra information for the portlet -->
-              <portlet-info>
-                <title>Vue Webpack Sample</title>
-              </portlet-info>
-            </portlet>
+               <!-- block to define a new portlet-->
+               <portlet>
+                 <!-- Portlet name -->
+                 <portlet-name>vueWebpackSample</portlet-name>
+                 <!-- Portlet class -->
+                 <portlet-class>org.exoplatform.commons.api.portlet.GenericDispatchedViewPortlet</portlet-class>
+                 <!-- Parameters needed to initiate the portlet. In this case the path to the HTML file of the VueJS application -->
+                 <init-param>
+                   <name>portlet-view-dispatched-file-path</name>
+                   <value>/index.html</value>
+                 </init-param>
+                 <!-- supported mimetypes -->
+                 <supports>
+                   <mime-type>text/html</mime-type>
+                 </supports>
+                 <!-- Extra information for the portlet -->
+                 <portlet-info>
+                   <title>Vue Webpack Sample</title>
+                 </portlet-info>
+               </portlet>
 
-           </portlet-app>
-       ```
-    -  ```src/main/webapp/WEB-INF/gatein-resources.xml``` : XML descriptor for CSS and javascript files managed by eXo platform.
-       ```xml
-          <gatein-resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:schemaLocation="http://www.exoplatform.org/xml/ns/gatein_resources_1_4 
-                  http://www.exoplatform.org/xml/ns/gatein_resources_1_4"
-                  xmlns="http://www.exoplatform.org/xml/ns/gatein_resources_1_4">
-            <!-- This block will add a new CSS file that will be loaded in the page 
-            along with a related portlet (it won't be available for other pages) -->      
-            <portlet-skin>
-              <!-- application name : the display name of the war in web.xml file --> 
-              <application-name>vue-webpack-sample</application-name>
-              <!-- portlet name defined in portlet.xml file -->
-              <portlet-name>vueWebpackSample</portlet-name>
-              <!-- Skin name : default to Enterprise-->
-              <skin-name>Enterprise</skin-name>
-              <!-- Path to CSS file under this webapp-->
-              <css-path>/css/sample.css</css-path>
-            </portlet-skin>
+              </portlet-app>
+          ```
+       -  ```src/main/webapp/WEB-INF/gatein-resources.xml``` : XML descriptor for CSS and javascript files managed by eXo platform.
+          ```xml
+             <gatein-resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://www.exoplatform.org/xml/ns/gatein_resources_1_4 
+                     http://www.exoplatform.org/xml/ns/gatein_resources_1_4"
+                     xmlns="http://www.exoplatform.org/xml/ns/gatein_resources_1_4">
+               <!-- This block will add a new CSS file that will be loaded in the page 
+               along with a related portlet (it won't be available for other pages) -->      
+               <portlet-skin>
+                 <!-- application name : the display name of the war in web.xml file --> 
+                 <application-name>vue-webpack-sample</application-name>
+                 <!-- portlet name defined in portlet.xml file -->
+                 <portlet-name>vueWebpackSample</portlet-name>
+                 <!-- Skin name : default to Enterprise-->
+                 <skin-name>Enterprise</skin-name>
+                 <!-- Path to CSS file under this webapp-->
+                 <css-path>/css/sample.css</css-path>
+               </portlet-skin>
 
-            <!-- This block will add a new JS to the site. This CSS will be loaded in the page 
-            along with a related portlet (it won't be available for other pages) -->
-            <portlet>
-              <!-- portlet name defined in portlet.xml file -->
-              <name>vueWebpackSample</name>
-              <!-- JS file will be added as a Javascript module -->
-              <module>
-                <script>
-                  <!-- JS is already minified by NPM, no need to minify it again -->
-                  <minify>false</minify>
-                  <!-- Path to JS file under this webapp-->
-                  <path>/js/sample.bundle.js</path>
-                </script>
-                <!-- Javascript dependencies for this JS module -->
-                <depends>
-                  <module>vue</module>
-                </depends>
-                <depends>
-                  <module>eXoVueI18n</module>
-                </depends>
-              </module>
-            </portlet>
-          </gatein-resources>
-       ```
-    -  ```src/main/webapp/vue-app/main.js``` : it is used to initialize the application inside an element in the HTML file index.html
-       ```js  
-        import './initComponents.js'; // initialize other VueJS components
-        import app from './components/app.vue'; // import the main VueJS application
+               <!-- This block will add a new JS to the site. This CSS will be loaded in the page 
+               along with a related portlet (it won't be available for other pages) -->
+               <portlet>
+                 <!-- portlet name defined in portlet.xml file -->
+                 <name>vueWebpackSample</name>
+                 <!-- JS file will be added as a Javascript module -->
+                 <module>
+                   <script>
+                     <!-- JS is already minified by NPM, no need to minify it again -->
+                     <minify>false</minify>
+                     <!-- Path to JS file under this webapp-->
+                     <path>/js/sample.bundle.js</path>
+                   </script>
+                   <!-- Javascript dependencies for this JS module -->
+                   <depends>
+                     <module>vue</module>
+                   </depends>
+                   <depends>
+                     <module>eXoVueI18n</module>
+                   </depends>
+                 </module>
+               </portlet>
+             </gatein-resources>
+          ```
+       -  ```src/main/webapp/vue-app/main.js``` : it is used to initialize the application inside an element in the HTML file index.html
+          ```js  
+           import './initComponents.js'; // initialize other VueJS components
+           import app from './components/app.vue'; // import the main VueJS application
 
-        // Get the user language
-        const lang = eXo && eXo.env && eXo.env.portal && eXo.env.portal.language || 'en';
+           // Get the user language
+           const lang = eXo && eXo.env && eXo.env.portal && eXo.env.portal.language || 'en';
 
-        // Get the name of the resource bundle
-        const resourceBundleName = 'locale.addon.Sample';
+           // Get the name of the resource bundle
+           const resourceBundleName = 'locale.addon.Sample';
 
-        // Get the URL to load the resource bundles
-        const url = `${eXo.env.portal.context}/${eXo.env.portal.rest}/i18n/bundle/${resourceBundleName}-${lang}.json`;
+           // Get the URL to load the resource bundles
+           const url = `${eXo.env.portal.context}/${eXo.env.portal.rest}/i18n/bundle/${resourceBundleName}-${lang}.json`;
 
-        // getting the resource bundles
-        exoi18n.loadLanguageAsync(lang, url)
-          .then(i18n => {
-            // init Vue app when locale resources are ready
-            new Vue({
-              render: h => h(app),
-              i18n
-            }).$mount('#vue_webpack_sample'); // mount the application on the HTML element with id = 'vue_webpack_sample'
-          });
-       ```
-    -  ```src/main/webapp/index.html``` : should at least provide the HTML element where the VueJS application will be mounted. This file will load the main.js file to initialize the application on the page.
-       ```html
-          <div id="vue_webpack_sample"></div>
-       ```  
-    -  ```src/main/webapp/vue-app/components/app.vue``` : the VueJS main application
-       ```vue
-          <template>
-            <div id="vue_webpack_sample">
-              <span>{{ $t('sample.i18n.label') }}</span>
-              <todo-list />
-            </div>
-          </template>
-       ```
-    -  ```src/main/webapp/vue-app/components/todo-list-component.vue```: another vue component that was loaded in the Vue JS application 
-       ```vue
-          <template>
-            <div id="todoList">
-              <input v-model="newTodo" @keyup.enter="addTodo">
-              <ul>
-                <li v-for="(todo, index) in todos" :key="index">
-                  <span :id="'todo' + index">{{ todo.text }}</span>
-                  <button :id="'btnRemove' + index" @click="removeTodo($index)">X</button>
-                </li>
-              </ul>
-            </div>
-          </template>
-          <script>
-          export default {
-            data() {
-              return {
-                newTodo: '',
-                todos: [
-                  { text: 'Add some todos' }
-                ]
-              };
-            },
-            methods: {
-              addTodo: function () {
-                const text = this.newTodo.trim();
-                if (text) {
-                  this.todos.push({ text: text });
-                  this.newTodo = '';
-                }
-              },
-              removeTodo: function (index) {
-                this.todos.splice(index, 1);
-              }
-            }
-          };
-          </script>
-       ```  
-    -  ```src/main/webapp/vue-app/initComponents.js```: a JS script used to register all components created in the current project in the Vue global context to be used by the application.
-       ```js
-          import TodoList from './components/todo-list-component.vue';
+           // getting the resource bundles
+           exoi18n.loadLanguageAsync(lang, url)
+             .then(i18n => {
+               // init Vue app when locale resources are ready
+               new Vue({
+                 render: h => h(app),
+                 i18n
+               }).$mount('#vue_webpack_sample'); // mount the application on the HTML element with id = 'vue_webpack_sample'
+             });
+          ```
+       -  ```src/main/webapp/index.html``` : should at least provide the HTML element where the VueJS application will be mounted. This file will load the main.js file to initialize the application on the page.
+          ```html
+             <div id="vue_webpack_sample"></div>
+          ```  
+       -  ```src/main/webapp/vue-app/components/app.vue``` : the VueJS main application
+          ```vue
+             <template>
+               <div id="vue_webpack_sample">
+                 <span>{{ $t('sample.i18n.label') }}</span>
+                 <todo-list />
+               </div>
+             </template>
+          ```
+       -  ```src/main/webapp/vue-app/components/todo-list-component.vue```: another vue component that was loaded in the Vue JS application 
+          ```vue
+             <template>
+               <div id="todoList">
+                 <input v-model="newTodo" @keyup.enter="addTodo">
+                 <ul>
+                   <li v-for="(todo, index) in todos" :key="index">
+                     <span :id="'todo' + index">{{ todo.text }}</span>
+                     <button :id="'btnRemove' + index" @click="removeTodo($index)">X</button>
+                   </li>
+                 </ul>
+               </div>
+             </template>
+             <script>
+             export default {
+               data() {
+                 return {
+                   newTodo: '',
+                   todos: [
+                     { text: 'Add some todos' }
+                   ]
+                 };
+               },
+               methods: {
+                 addTodo: function () {
+                   const text = this.newTodo.trim();
+                   if (text) {
+                     this.todos.push({ text: text });
+                     this.newTodo = '';
+                   }
+                 },
+                 removeTodo: function (index) {
+                   this.todos.splice(index, 1);
+                 }
+               }
+             };
+             </script>
+          ```  
+       -  ```src/main/webapp/vue-app/initComponents.js```: a JS script used to register all components created in the current project in the Vue global context to be used by the application.
+          ```js
+             import TodoList from './components/todo-list-component.vue';
 
-          const components = {
-            'todo-list': TodoList,
-          };
-          for (const key in components) {
-            Vue.component(key, components[key]);
-          }
-       ```    
-    -  ```src/main/webapp/css/sample.css``` : CSS classes that will be used to provide styling to the VueJS components. It will be configured in gatein-resources.xml to load it just when the portlet is displayed
-       ```css
-          #vue_webpack_sample {
-            display: flex;
-            background: white;
-            flex-direction: column;
-            align-items: center;
-            margin: auto;
-            padding: 0;
-          }
-          #vue_webpack_sample > span {
-              color: red;
-              margin: auto;
-            }
-          }
-       ```
-    -  Node & NPM files :
-       -  ```.babelrc```babel configuration file for our VueJS application, for more details check [Babel documentation](https://babeljs.io/docs/en/)
-       -  ```.eslintrc.json``` : eslint configuration file check [ESlint documentation](https://eslint.org/docs/latest/user-guide/)
-       -  ```package.json```: NPM configuration file, for more details check [NPM documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-json)
-       -  ```package-lock.json```: generated NPM configuration file, for more details check [NPM documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-lock-json)
-       -  ```webpack.common.js```: Common configuration for [Webpack](https://webpack.js.org/concepts/) needed to package the application 
-       -  ```webpack.dev.js``` : Development configuration of the application for Webpack, needed to simplify developing and debugging the application
-       -  ```webpack.prod.js```:Production configuration of the application for Webpack, used to build final package deployable on production
+             const components = {
+               'todo-list': TodoList,
+             };
+             for (const key in components) {
+               Vue.component(key, components[key]);
+             }
+          ```    
+       -  ```src/main/webapp/css/sample.css``` : CSS classes that will be used to provide styling to the VueJS components. It will be configured in gatein-resources.xml to load it just when the portlet is displayed
+          ```css
+             #vue_webpack_sample {
+               display: flex;
+               background: white;
+               flex-direction: column;
+               align-items: center;
+               margin: auto;
+               padding: 0;
+             }
+             #vue_webpack_sample > span {
+               color: red;
+               margin: auto;
+             }
+          ```
+       -  Node & NPM files :
+          -  ```.babelrc```babel configuration file for our VueJS application, for more details check [Babel documentation](https://babeljs.io/docs/en/)
+          -  ```.eslintrc.json``` : eslint configuration file check [ESlint documentation](https://eslint.org/docs/latest/user-guide/)
+          -  ```package.json```: NPM configuration file, for more details check [NPM documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-json)
+          -  ```package-lock.json```: generated NPM configuration file, for more details check [NPM documentation](https://docs.npmjs.com/cli/v7/configuring-npm/package-lock-json)
+          -  ```webpack.common.js```: Common configuration for [Webpack](https://webpack.js.org/concepts/) needed to package the application 
+          -  ```webpack.dev.js``` : Development configuration of the application for Webpack, needed to simplify developing and debugging the application
+          -  ```webpack.prod.js```:Production configuration of the application for Webpack, used to build final package deployable on production
 2.  Here is the list of files included that form the extension : 
    -  ```src/main/webapp/META-INF/exo-conf/configuration.xml``` : extension activator configuration, more details in [Prepare extension project](/guide/developer-guide/prepare-extension-project)
    -  ```src/main/webapp/WEB-INF/web.xml``` : Web application descriptor. it contains 
