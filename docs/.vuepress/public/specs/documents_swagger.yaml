@@ -224,10 +224,8 @@ paths:
           description: Request fulfilled
         "400":
           description: Invalid query input
-        "403":
-          description: Unauthorized operation
-        "404":
-          description: Resource not found
+        "410":
+          description: Resource no more available
     post:
       tags:
       - /v1/documents
