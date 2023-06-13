@@ -7,60 +7,17 @@ info:
     url: https://www.gnu.org/licenses/lgpl-3.0.en.html
   version: "1.0"
 tags:
-- name: /gamification/announcement/api
+- name: /gamification/announcements
   description: Manages announcement associated to users
-- name: /challenge/api
-  description: Manages challenge associated to users
+- name: /gamification/realizations
+  description: Manages users realizations
 - name: /gamification/rules
   description: Manages rules
-- name: /gamification/realizations/api
-  description: Manages users realizations
 paths:
-  /gamification/announcement/api/ByChallengeId/{challengeId}:
-    get:
-      tags:
-      - /gamification/announcement/api
-      summary: Retrieves the list of challenges available for an owner
-      description: Retrieves the list of challenges available for an owner
-      operationId: getAllAnnouncementByChallenge
-      parameters:
-      - name: challengeId
-        in: path
-        description: id of the challenge
-        required: true
-        schema:
-          type: string
-      - name: type
-        in: query
-        description: "earner type, user or space"
-        schema:
-          type: string
-          default: USER
-      - name: offset
-        in: query
-        description: Offset of result
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: limit
-        in: query
-        description: Limit of result
-        schema:
-          type: integer
-          format: int32
-          default: 10
-      responses:
-        "200":
-          description: Request fulfilled
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
-  /gamification/announcement/api/addAnnouncement:
+  /gamification/announcements:
     post:
       tags:
-      - /gamification/announcement/api
+      - /gamification/announcements
       summary: Creates a new Announcement
       description: Creates a new Announcement
       operationId: createAnnouncement
@@ -76,16 +33,14 @@ paths:
           description: Request fulfilled
         "400":
           description: Invalid query input
-        "401":
-          description: Unauthorized operation
         "500":
           description: Internal server error
-        "403":
-          description: Forbidden operation
-  /gamification/announcement/api/{announcementId}:
+        "401":
+          description: Unauthorized operation
+  /gamification/announcements/{announcementId}:
     delete:
       tags:
-      - /gamification/announcement/api
+      - /gamification/announcements
       summary: Cancels an existing announcement
       description: Cancels an existing announcement
       operationId: cancelAnnouncement
@@ -98,20 +53,12 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
+        "204":
           description: Request fulfilled
         "404":
           description: Object not found
         "401":
           description: Unauthorized operation
-  /gamification/api/v1/domains:
-    get:
-      operationId: getDomains
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
   /gamification/api/v1/events:
     get:
       operationId: getAllEvents
@@ -228,418 +175,6 @@ paths:
           description: default response
           content:
             application/json: {}
-  /gamification/challenges:
-    get:
-      tags:
-      - /challenge/api
-      summary: Retrieves the list of challenges available for an owner
-      description: Retrieves the list of challenges available for an owner
-      operationId: getAllChallengesByUser
-      parameters:
-      - name: offset
-        in: query
-        description: Offset of result
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: limit
-        in: query
-        description: Limit of result
-        schema:
-          type: integer
-          format: int32
-          default: 10
-      - name: groupByDomain
-        in: query
-        description: Group challenges by domain
-        schema:
-          type: boolean
-          default: false
-      - name: domainId
-        in: query
-        description: Used to filter challenges by domain
-        schema:
-          type: integer
-          format: int64
-      - name: announcements
-        in: query
-        description: Number of announcements per challenge
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: term
-        in: query
-        description: term to search challenges with
-        schema:
-          type: string
-      - name: filter
-        in: query
-        description: "Challenge period filtering. Possible values: STARTED, NOT_STARTED,\
-          \ ENDED, ALL"
-        schema:
-          type: string
-          default: ALL
-      - name: orderByRealizations
-        in: query
-        description: is popular challenges
-        schema:
-          type: boolean
-          default: false
-      - name: excludedChallengesIds
-        in: query
-        description: Excluded challenges Ids
-        schema:
-          type: array
-          items:
-            type: integer
-            format: int64
-      - name: period
-        in: query
-        description: "Challenge period filtering. Possible values: WEEK, MONTH, YEAR,\
-          \ ALL"
-        schema:
-          type: string
-          default: ALL
-      responses:
-        "200":
-          description: Request fulfilled
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
-    put:
-      tags:
-      - /challenge/api
-      summary: Updates an existing challenge
-      description: Updates an existing challenge
-      operationId: updateChallenge
-      requestBody:
-        description: challenge object to update
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Challenge'
-        required: true
-      responses:
-        "204":
-          description: Request fulfilled
-        "404":
-          description: Object not found
-        "400":
-          description: Invalid query input
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
-    post:
-      tags:
-      - /challenge/api
-      summary: Creates a new challenge
-      description: Creates a new challenge
-      operationId: createChallenge
-      requestBody:
-        description: Challenge object to create
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Challenge'
-        required: true
-      responses:
-        "204":
-          description: Request fulfilled
-        "400":
-          description: Invalid query input
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
-  /gamification/challenges/canAddChallenge:
-    get:
-      tags:
-      - /challenge/api
-      summary: check if the current user can add a challenge
-      description: This checks if the current user user can add a challenge
-      operationId: canAddChallenge
-      responses:
-        "200":
-          description: User ability to add a challenge is returned
-        "401":
-          description: User not authorized to add a challenge
-  /gamification/challenges/{challengeId}:
-    get:
-      tags:
-      - /challenge/api
-      summary: Retrieves a challenge by its id
-      description: returns selected challenge if exists
-      operationId: getChallengeById
-      parameters:
-      - name: challengeId
-        in: path
-        description: Challenge technical id
-        required: true
-        schema:
-          type: integer
-          format: int64
-      - name: offset
-        in: query
-        description: Offset of result
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: limit
-        in: query
-        description: Limit of result
-        schema:
-          type: integer
-          format: int32
-          default: 10
-      responses:
-        "200":
-          description: Request fulfilled
-        "400":
-          description: Invalid query input
-        "403":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
-  /gamification/challenges/{id}:
-    delete:
-      tags:
-      - /challenge/api
-      summary: check if the current user can add a challenge
-      description: This checks if the current user user can add a challenge
-      operationId: deleteChallenge
-      parameters:
-      - name: id
-        in: path
-        description: challenge id to be deleted
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: challenge deleted
-        "401":
-          description: User not authorized to delete a challenge
-        "400":
-          description: Invalid query input
-        "404":
-          description: Object not found
-        "500":
-          description: Internal server error
-  /gamification/domains:
-    get:
-      summary: Retrieves the list of available domains
-      operationId: getDomains_1
-      parameters:
-      - name: offset
-        in: query
-        description: Offset of results to retrieve
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: limit
-        in: query
-        description: Limit of results to retrieve
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: type
-        in: query
-        description: "Domains type filtering, possible values: AUTOMATIC, MANUAL and\
-          \ ALL. Default value = AUTOMATIC."
-        schema:
-          type: string
-          default: AUTOMATIC
-      - name: status
-        in: query
-        description: "Domains status filtering, possible values: ENABLED, DISABLED\
-          \ and ALL. Default value = ENABLED."
-        schema:
-          type: string
-          default: ENABLED
-      - name: ownerId
-        in: query
-        description: owner id
-        schema:
-          type: integer
-          format: int64
-      - name: sortByBudget
-        in: query
-        description: "If true, this will return the filtered domains sorted by budget.\
-          \ Possible values = true or false. Default value = false."
-        schema:
-          type: boolean
-          default: false
-      - name: includeDeleted
-        in: query
-        description: "If true, this will return the filtered domains including deleted\
-          \ domains. Possible values = true or false. Default value = false."
-        schema:
-          type: boolean
-          default: false
-      - name: returnSize
-        in: query
-        description: "If true, this will return the total count of filtered domains.\
-          \ Possible values = true or false. Default value = false."
-        schema:
-          type: boolean
-          default: false
-      - name: query
-        in: query
-        description: Term to search.
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
-        "400":
-          description: Invalid query input
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
-    post:
-      summary: Creates a domain
-      operationId: createDomain
-      requestBody:
-        description: Domain object to create
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DomainDTO'
-        required: true
-      responses:
-        "200":
-          description: Request fulfilled
-        "400":
-          description: Invalid query input
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
-  /gamification/domains/canAddProgram:
-    get:
-      summary: check if the current user can add a program
-      operationId: canAddProgram
-      responses:
-        "200":
-          description: User ability to add a program is returned
-        "500":
-          description: Internal server error
-  /gamification/domains/{domainId}:
-    get:
-      summary: Retrieves a domain by its id
-      operationId: getDomainById
-      parameters:
-      - name: domainId
-        in: path
-        description: domain id
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: Request fulfilled
-        "400":
-          description: Invalid query input
-        "404":
-          description: Not found
-        "500":
-          description: Internal server error
-    delete:
-      summary: Deletes an existing domain identified by its id
-      operationId: deleteDomain
-      parameters:
-      - name: domainId
-        in: path
-        description: domain id to be deleted
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "204":
-          description: Request fulfilled
-        "400":
-          description: Invalid query input
-        "401":
-          description: Unauthorized operation
-        "404":
-          description: Object not found
-        "500":
-          description: Internal server error
-  /gamification/domains/{id}:
-    put:
-      summary: updates created domain
-      operationId: updateDomain
-      parameters:
-      - name: id
-        in: path
-        description: domain id
-        required: true
-        schema:
-          type: integer
-          format: int64
-      requestBody:
-        description: domain object to update
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DomainDTO'
-        required: true
-      responses:
-        "200":
-          description: Request fulfilled
-        "400":
-          description: Invalid query input
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
-  /gamification/domains/{id}/cover:
-    get:
-      summary: Gets a domain cover
-      operationId: getDomainCoverById
-      parameters:
-      - name: lastModified
-        in: query
-        description: "The value of lastModified parameter will determine whether the\
-          \ query should be cached by browser or not. If not set, no 'expires HTTP\
-          \ Header will be sent'"
-        schema:
-          type: integer
-          format: int64
-      - name: id
-        in: path
-        description: domain id
-        required: true
-        schema:
-          type: string
-      - name: r
-        in: query
-        description: A mandatory valid token that is used to authorize anonymous request
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "400":
-          description: Invalid query input
-        "403":
-          description: Forbidden request
-        "404":
-          description: Resource not found
   /gamification/gameficationinformationsboard/history/all:
     get:
       operationId: getAllLeadersByRank
@@ -665,7 +200,7 @@ paths:
     get:
       operationId: filter
       parameters:
-      - name: domainId
+      - name: programId
         in: query
         schema:
           type: integer
@@ -677,7 +212,8 @@ paths:
       - name: capacity
         in: query
         schema:
-          type: string
+          type: integer
+          format: int32
       responses:
         default:
           description: default response
@@ -734,14 +270,333 @@ paths:
           description: default response
           content:
             application/json: {}
-  /gamification/realizations/api/allRealizations:
+  /gamification/programs:
+    get:
+      summary: Retrieves the list of available programs
+      operationId: getPrograms
+      parameters:
+      - name: offset
+        in: query
+        description: Offset of results to retrieve
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: limit
+        in: query
+        description: Limit of results to retrieve
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: status
+        in: query
+        description: "Programs status filtering, possible values: ENABLED, DISABLED\
+          \ and ALL. Default value = ENABLED."
+        schema:
+          type: string
+          default: ENABLED
+          enum:
+          - ENABLED
+          - DISABLED
+          - ALL
+      - name: owned
+        in: query
+        description: Whether retrieve owned programs only or not
+        schema:
+          type: boolean
+      - name: sortByBudget
+        in: query
+        description: "If true, this will return the filtered programs sorted by budget.\
+          \ Possible values = true or false. Default value = false."
+        schema:
+          type: boolean
+          default: false
+      - name: includeDeleted
+        in: query
+        description: "If true, this will return the filtered programs including deleted\
+          \ ones. Possible values = true or false. Default value = false."
+        schema:
+          type: boolean
+          default: false
+      - name: returnSize
+        in: query
+        description: "If true, this will return the total count of filtered programs.\
+          \ Possible values = true or false. Default value = false."
+        schema:
+          type: boolean
+          default: false
+      - name: lang
+        in: query
+        description: Used to retrieve the title and description in requested language
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: Term to search.
+        schema:
+          type: string
+      - name: expand
+        in: query
+        description: Used to retrieve extra information about the program
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
+    post:
+      summary: Creates a program
+      operationId: createProgram
+      requestBody:
+        description: Program object to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramDTO'
+        required: true
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
+  /gamification/programs/{id}:
+    put:
+      summary: Updates an existing program
+      operationId: updateProgram
+      parameters:
+      - name: id
+        in: path
+        description: Program id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Program object to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramDTO'
+        required: true
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
+  /gamification/programs/{id}/avatar:
+    get:
+      summary: Gets a program avatar
+      operationId: getProgramAvatar
+      parameters:
+      - name: lastModified
+        in: query
+        description: "The value of lastModified parameter will determine whether the\
+          \ query should be cached by browser or not. If not set, no 'expires HTTP\
+          \ Header will be sent'"
+        schema:
+          type: integer
+          format: int64
+      - name: id
+        in: path
+        description: program id
+        required: true
+        schema:
+          type: string
+      - name: r
+        in: query
+        description: A mandatory valid token that is used to authorize anonymous request
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+        "400":
+          description: Invalid query input
+        "403":
+          description: Forbidden request
+        "404":
+          description: Resource not found
+  /gamification/programs/{id}/color:
+    post:
+      summary: "Returns true if the color can be used, else return false"
+      operationId: checkProgramColorValidity
+      parameters:
+      - name: id
+        in: path
+        description: program id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - color
+              type: object
+              properties:
+                color:
+                  type: string
+                  description: Program color to check its validity
+      responses:
+        "200":
+          description: Request fulfilled
+  /gamification/programs/{id}/cover:
+    get:
+      summary: Gets a program cover
+      operationId: getProgramCover
+      parameters:
+      - name: lastModified
+        in: query
+        description: "The value of lastModified parameter will determine whether the\
+          \ query should be cached by browser or not. If not set, no 'expires HTTP\
+          \ Header will be sent'"
+        schema:
+          type: integer
+          format: int64
+      - name: id
+        in: path
+        description: program id
+        required: true
+        schema:
+          type: string
+      - name: r
+        in: query
+        description: A mandatory valid token that is used to authorize anonymous request
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+        "400":
+          description: Invalid query input
+        "403":
+          description: Forbidden request
+        "404":
+          description: Resource not found
+  /gamification/programs/{programId}:
+    get:
+      summary: Retrieves a program by its technical identifier
+      operationId: getProgramById
+      parameters:
+      - name: programId
+        in: path
+        description: Program technical identifier
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: lang
+        in: query
+        description: Used to retrieve the title and description in requested language
+        schema:
+          type: string
+      - name: expand
+        in: query
+        description: Used to retrieve extra information about the program
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "401":
+          description: Unauthorized operation
+        "400":
+          description: Invalid query input
+        "404":
+          description: Not found
+        "500":
+          description: Internal server error
+    delete:
+      summary: Deletes an existing program identified by its id
+      operationId: deleteProgram
+      parameters:
+      - name: programId
+        in: path
+        description: Program id to be deleted
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "404":
+          description: Object not found
+        "500":
+          description: Internal server error
+  /gamification/programs/{programId}/avatar:
+    delete:
+      summary: Deletes program avatar identified by program id
+      operationId: deleteProgramAvatar
+      parameters:
+      - name: programId
+        in: path
+        description: Program identifier
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Request fulfilled
+        "401":
+          description: Unauthorized operation
+        "404":
+          description: Object not found
+  /gamification/programs/{programId}/cover:
+    delete:
+      summary: Deletes program cover identified by program id
+      operationId: deleteProgramCover
+      parameters:
+      - name: programId
+        in: path
+        description: Program identifier
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Request fulfilled
+        "401":
+          description: Unauthorized operation
+        "404":
+          description: Object not found
+  /gamification/realizations:
     get:
       tags:
-      - /gamification/realizations/api
+      - /gamification/realizations
       summary: Retrieves the list of achievements switch a filter. The returned format
         can be of type JSON or XLSX
-      description: Retrieves the list of challenges available for an owner
-      operationId: getAllRealizations
+      description: Retrieves the list of achievements switch a filter. The returned
+        format can be of type JSON or XLSX
+      operationId: getRealizations
       parameters:
       - name: fromDate
         in: query
@@ -789,23 +644,54 @@ paths:
           format: int32
       - name: returnType
         in: query
-        description: Response Type
+        description: "Response content Type. Either xlsx or json. Default value: json"
         schema:
           type: string
-          default: ""
-      - name: identityType
+          default: json
+      - name: earnerType
         in: query
-        description: identity Type
+        description: "Earner type, either USER or SPACE. Default: USER"
         schema:
           type: string
-      - name: domainIds
+          default: USER
+          enum:
+          - USER
+          - SPACE
+      - name: status
         in: query
-        description: domainIds. that will be used to filter achievements
+        description: "Realization status. Possible values: ACCEPTED, REJECTED, CANCELED,\
+          \ DELETED"
+        schema:
+          type: string
+          enum:
+          - ACCEPTED
+          - NONE
+          - REJECTED
+          - CANCELED
+          - DELETED
+      - name: programIds
+        in: query
+        description: Program technical identifiers. that will be used to filter achievements
         schema:
           type: array
           items:
             type: integer
             format: int64
+      - name: ruleIds
+        in: query
+        description: Rule technical identifiers that will be used to filter achievements
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+      - name: owned
+        in: query
+        description: "If true, this will return the list of realizations, the current\
+          \ user can manage. Possible values = true or false. Default value = false."
+        schema:
+          type: boolean
+          default: false
       - name: returnSize
         in: query
         description: "If true, this will return the total count of filtered realizations.\
@@ -820,48 +706,46 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
-  /gamification/realizations/api/updateRealizations:
-    put:
+    patch:
       tags:
-      - /gamification/realizations/api
+      - /gamification/realizations
       summary: Updates an existing realization
-      description: Updates an existing realization
-      operationId: updateRealization
-      parameters:
-      - name: realizationId
-        in: query
-        description: id of realization
-        required: true
-        schema:
-          type: string
-      - name: status
-        in: query
-        description: new status of realization
-        required: true
-        schema:
-          type: string
-      - name: actionLabel
-        in: query
-        description: new action Label of realization
-        schema:
-          type: string
-      - name: points
-        in: query
-        description: new points of realization
-        schema:
-          type: integer
-          format: int64
+      description: Updates an existing realization status
+      operationId: updateRealizationStatus
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - id
+              - status
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Realization technical identifier
+                status:
+                  type: string
+                  description: Realization technical identifier
       responses:
         "204":
           description: Request fulfilled
         "404":
           description: Object not found
         "400":
-          description: Invalid query input
+          description: Bad request
         "401":
           description: Unauthorized operation
-        "500":
-          description: Internal server error
+  /gamification/realizations/manager:
+    get:
+      tags:
+      - /gamification/realizations
+      summary: "Return 'true' if the current user can manage some realizations, else\
+        \ return 'false'"
+      operationId: isRealizationManager
+      responses:
+        "200":
+          description: Request fulfilled
   /gamification/reputation/AllofBadges:
     get:
       operationId: getAllOfBadges
@@ -995,9 +879,9 @@ paths:
           type: integer
           format: int32
           default: 20
-      - name: domainId
+      - name: programId
         in: query
-        description: Used to filter rules by domain
+        description: Used to filter rules by program
         schema:
           type: integer
           format: int64
@@ -1008,36 +892,118 @@ paths:
         schema:
           type: string
           default: ALL
+          enum:
+          - AUTOMATIC
+          - MANUAL
+          - ALL
+      - name: programStatus
+        in: query
+        description: "Programs status filtering, possible values: ENABLED, DISABLED\
+          \ and ALL. Default value = ENABLED."
+        schema:
+          type: string
+          default: ALL
+          enum:
+          - ENABLED
+          - DISABLED
+          - ALL
       - name: status
         in: query
         description: "Rules status filtering, possible values: ENABLED, DISABLED and\
-          \ ALL. Default value = ENABLED."
+          \ ALL. Default value = ALL."
         schema:
           type: string
-          default: ENABLED
-      - name: includeDeleted
+          default: ALL
+          enum:
+          - ENABLED
+          - DISABLED
+          - ALL
+      - name: dateFilter
         in: query
-        description: "If true, this will return the filtered rules including deleted\
-          \ rules. Possible values = true or false. Default value = false."
+        description: "Rule period filtering. Possible values: STARTED, NOT_STARTED,\
+          \ ENDED, ALL"
         schema:
-          type: boolean
-          default: false
+          type: string
+          default: ALL
+          enum:
+          - ACTIVE
+          - STARTED
+          - STARTED_WITH_END
+          - UPCOMING
+          - ENDED
+          - ALL
       - name: term
         in: query
         description: term to search rules with
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: "Sort field. Possible values: createdDate, startDate, endDate\
+          \ or score."
+        schema:
+          type: string
+          default: score
+      - name: sortDescending
+        in: query
+        description: Whether to retrieve results sorted descending or not
+        schema:
+          type: boolean
+          default: true
+      - name: realizationsLimit
+        in: query
+        description: Accepted users realizations count
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: groupByProgram
+        in: query
+        description: Group rules by program
+        schema:
+          type: boolean
+          default: false
+      - name: orderByRealizations
+        in: query
+        description: Whether Sort by popular rules or not
+        schema:
+          type: boolean
+          default: false
+      - name: excludedRuleIds
+        in: query
+        description: Excluded rule Ids
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+      - name: period
+        in: query
+        description: "Rule period filtering. Possible values: WEEK, MONTH, YEAR, ALL"
+        schema:
+          type: string
+          default: ALL
+          enum:
+          - WEEK
+          - MONTH
+          - YEAR
+          - ALL
       - name: returnSize
         in: query
-        description: "If true, this will return the total count of filtered domains.\
+        description: "If true, this will return the total count of filtered programs.\
           \ Possible values = true or false. Default value = false."
         schema:
           type: boolean
           default: false
+      - name: lang
+        in: query
+        description: Used to retrieve the title and description in requested language
+        schema:
+          type: string
       - name: expand
         in: query
         description: "Asking for a full representation of a specific subresource,\
-          \ ex: userAnnouncements"
+          \ ex: userRealizations"
         schema:
           type: string
       responses:
@@ -1093,16 +1059,6 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
-  /gamification/rules/active:
-    get:
-      tags:
-      - /gamification/rules
-      operationId: getActiveRules
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
   /gamification/rules/{id}:
     get:
       tags:
@@ -1117,10 +1073,22 @@ paths:
         schema:
           type: integer
           format: int64
+      - name: realizationsLimit
+        in: query
+        description: Accepted users realizations count
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: lang
+        in: query
+        description: Used to retrieve the title and description in requested language
+        schema:
+          type: string
       - name: expand
         in: query
         description: "Asking for a full representation of a specific subresource,\
-          \ ex: userAnnouncements"
+          \ ex: countRealizations"
         schema:
           type: string
       responses:
@@ -1161,7 +1129,7 @@ paths:
     get:
       operationId: filter_1
       parameters:
-      - name: domain
+      - name: program
         in: query
         schema:
           type: integer
@@ -1237,8 +1205,6 @@ components:
           type: boolean
         description:
           type: string
-        domainDTO:
-          $ref: '#/components/schemas/DomainDTO'
         enabled:
           type: boolean
         endValidityDate:
@@ -1261,53 +1227,32 @@ components:
         neededScore:
           type: integer
           format: int32
+        program:
+          $ref: '#/components/schemas/ProgramDTO'
         startValidityDate:
           type: string
         title:
           type: string
         uploadId:
           type: string
-    Challenge:
-      type: object
-      properties:
-        audience:
-          type: integer
-          format: int64
-        description:
-          type: string
-        enabled:
-          type: boolean
-        endDate:
-          type: string
-        id:
-          type: integer
-          format: int64
-        managers:
-          type: array
-          items:
-            type: integer
-            format: int64
-        points:
-          type: integer
-          format: int64
-        program:
-          type: string
-        programId:
-          type: integer
-          format: int64
-        startDate:
-          type: string
-        title:
-          type: string
-    DomainDTO:
+    ProgramDTO:
       type: object
       properties:
         audienceId:
           type: integer
           format: int64
+        avatarFileId:
+          type: integer
+          format: int64
+        avatarUploadId:
+          type: string
+        avatarUrl:
+          type: string
         budget:
           type: integer
           format: int64
+        color:
+          type: string
         coverFileId:
           type: integer
           format: int64
@@ -1332,7 +1277,9 @@ components:
           type: string
         lastModifiedDate:
           type: string
-        owners:
+        open:
+          type: boolean
+        ownerIds:
           uniqueItems: true
           type: array
           items:
@@ -1344,6 +1291,9 @@ components:
         rulesTotalScore:
           type: integer
           format: int64
+        spaceId:
+          type: integer
+          format: int64
         title:
           type: string
         type:
@@ -1351,7 +1301,7 @@ components:
     RuleDTO:
       type: object
       properties:
-        audience:
+        audienceId:
           type: integer
           format: int64
         createdBy:
@@ -1362,8 +1312,6 @@ components:
           type: boolean
         description:
           type: string
-        domainDTO:
-          $ref: '#/components/schemas/DomainDTO'
         enabled:
           type: boolean
         endDate:
@@ -1378,13 +1326,38 @@ components:
         lastModifiedDate:
           type: string
         managers:
+          uniqueItems: true
           type: array
           items:
             type: integer
             format: int64
+        open:
+          type: boolean
+        prerequisiteRuleIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int64
+        program:
+          $ref: '#/components/schemas/ProgramDTO'
+        programId:
+          type: integer
+          format: int64
+        recurrence:
+          type: string
+          enum:
+          - NONE
+          - ONCE
+          - DAILY
+          - WEEKLY
+          - MONTHLY
         score:
           type: integer
           format: int32
+        spaceId:
+          type: integer
+          format: int64
         startDate:
           type: string
         title:
