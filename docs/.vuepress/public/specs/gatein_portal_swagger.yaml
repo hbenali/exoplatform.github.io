@@ -532,6 +532,23 @@ paths:
             type: string
             default: All possible values combined
           default: All possible values combined
+      - name: includeGlobal
+        in: query
+        description: if to include Global site in results in portal type case
+        schema:
+          type: boolean
+          default: true
+      - name: expand
+        in: query
+        description: to include extra node page details in results
+        schema:
+          type: boolean
+      - name: temporalCheck
+        in: query
+        description: to check the navigation nodes scheduling start and end dates
+        schema:
+          type: boolean
+          default: true
       responses:
         "200":
           description: Request fulfilled
