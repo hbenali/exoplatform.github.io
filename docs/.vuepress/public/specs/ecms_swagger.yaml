@@ -90,6 +90,33 @@ paths:
       responses:
         "200":
           description: Request fulfilled
+  /attachments/viewed/{nodeId}:
+    patch:
+      tags:
+      - /attachments
+      summary: Download a given document
+      description: Download a given document
+      operationId: markAsViewed
+      parameters:
+      - name: nodeId
+        in: path
+        description: node id
+        required: true
+        schema:
+          type: string
+      - name: viewer
+        in: query
+        description: viewer username
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "500":
+          description: Internal server error
   /attachments/{attachmentId}:
     get:
       tags:

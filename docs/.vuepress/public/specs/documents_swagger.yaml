@@ -419,6 +419,34 @@ paths:
           description: Unauthorized operation
         "404":
           description: Resource not found
+  /v1/documents/download:
+    get:
+      tags:
+      - /v1/documents
+      summary: Download a given document
+      description: Download a given document
+      operationId: downloadDocument
+      parameters:
+      - name: nodeId
+        in: query
+        description: public link node id
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: public access password
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
   /v1/documents/duplicate:
     post:
       tags:
@@ -664,6 +692,58 @@ paths:
           description: Invalid query input
         "403":
           description: Forbidden operation
+  /v1/documents/publicAccessLink:
+    get:
+      tags:
+      - /v1/documents
+      summary: Get public access details of a specific document
+      description: Get public access details of a specific document
+      operationId: getPublicAccessLink
+      parameters:
+      - name: nodeId
+        in: query
+        description: target file node identifier
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
+    post:
+      tags:
+      - /v1/documents
+      summary: Generate a new public link for a specific document
+      description: Generate a new public link for a specific document
+      operationId: createPublicAccessLink
+      parameters:
+      - name: nodeId
+        in: query
+        description: target file node identifier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: public access document options object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/PublicDocumentAccessOptionsEntity'
+        required: true
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
   /v1/documents/rename:
     put:
       tags:
@@ -773,6 +853,43 @@ paths:
           description: Unauthorized operation
         "404":
           description: Resource not found
+  /v1/documents/size/{ownerId}:
+    get:
+      tags:
+      - /v1/documents
+      summary: Get documents size
+      operationId: getSize
+      parameters:
+      - name: ownerId
+        in: path
+        description: "Identity technical identifier, required = true"
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+    post:
+      tags:
+      - /v1/documents
+      summary: Calculate documents size
+      operationId: addSize
+      parameters:
+      - name: ownerId
+        in: path
+        description: "Identity technical identifier, required = true"
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
   /v1/documents/versions:
     get:
       tags:
@@ -1035,6 +1152,9 @@ components:
           type: string
         versions:
           $ref: '#/components/schemas/FileVersionsEntity'
+        views:
+          type: integer
+          format: int64
     FileVersionEntity:
       type: object
       properties:
@@ -1176,4 +1296,14 @@ components:
         identity:
           $ref: '#/components/schemas/IdentityEntity'
         permission:
+          type: string
+    PublicDocumentAccessOptionsEntity:
+      type: object
+      properties:
+        expirationDate:
+          type: integer
+          format: int64
+        hasPassword:
+          type: boolean
+        password:
           type: string
