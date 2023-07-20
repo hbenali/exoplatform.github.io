@@ -585,6 +585,28 @@ paths:
           description: Internal server error
         "400":
           description: Invalid query input
+  /v1/social/activities/{activityId}/unhide:
+    put:
+      tags:
+      - v1/social/activities
+      summary: Unhides an activity to publish it in users stream
+      description: This unhides the given activity to publish it in users stream if
+        the authenticated user has edit permissions
+      operationId: publishActivity
+      parameters:
+      - name: activityId
+        in: path
+        description: Activity id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized
   /v1/social/comments/{id}:
     get:
       tags:
@@ -3685,6 +3707,8 @@ components:
           type: boolean
         hasLiked:
           type: boolean
+        hidden:
+          type: boolean
         href:
           type: string
         id:
@@ -3890,6 +3914,8 @@ components:
         hasCommented:
           type: boolean
         hasLiked:
+          type: boolean
+        hidden:
           type: boolean
         href:
           type: string

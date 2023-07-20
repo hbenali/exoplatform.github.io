@@ -336,6 +336,19 @@ paths:
         description: Term to search.
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: "Sort field. Possible values: createdDate, startDate, endDate\
+          \ or score."
+        schema:
+          type: string
+          default: title
+      - name: sortDescending
+        in: query
+        description: Whether to retrieve results sorted descending or not
+        schema:
+          type: boolean
+          default: true
       - name: expand
         in: query
         description: Used to retrieve extra information about the program
@@ -885,6 +898,14 @@ paths:
         schema:
           type: integer
           format: int64
+      - name: spaceId
+        in: query
+        description: Used to filter rules by space audience
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
       - name: type
         in: query
         description: "Rules type filtering, possible values: AUTOMATIC, MANUAL and\
@@ -937,6 +958,19 @@ paths:
         description: term to search rules with
         schema:
           type: string
+      - name: favorites
+        in: query
+        description: Whether to search in favorites only or not
+        schema:
+          type: boolean
+          default: false
+      - name: tags
+        in: query
+        description: Whether to search in favorites only or not
+        schema:
+          type: array
+          items:
+            type: string
       - name: sortBy
         in: query
         description: "Sort field. Possible values: createdDate, startDate, endDate\
@@ -1025,7 +1059,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RuleDTO'
+              $ref: '#/components/schemas/RulePublication'
         required: true
       responses:
         "204":
@@ -1048,7 +1082,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RuleDTO'
+              $ref: '#/components/schemas/RulePublication'
         required: true
       responses:
         "200":
@@ -1298,10 +1332,16 @@ components:
           type: string
         type:
           type: string
-    RuleDTO:
+    RulePublication:
       type: object
       properties:
+        activityId:
+          type: integer
+          format: int64
         audienceId:
+          type: integer
+          format: int64
+        cacheTime:
           type: integer
           format: int64
         createdBy:
@@ -1331,6 +1371,8 @@ components:
           items:
             type: integer
             format: int64
+        message:
+          type: string
         open:
           type: boolean
         prerequisiteRuleIds:
@@ -1344,6 +1386,8 @@ components:
         programId:
           type: integer
           format: int64
+        publish:
+          type: boolean
         recurrence:
           type: string
           enum:
