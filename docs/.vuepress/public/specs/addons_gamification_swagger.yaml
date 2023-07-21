@@ -1404,6 +1404,10 @@ components:
           format: int64
         startDate:
           type: string
+        templateParams:
+          type: object
+          additionalProperties:
+            type: string
         title:
           type: string
         type:
