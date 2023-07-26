@@ -372,6 +372,8 @@ paths:
           description: Invalid query input
         "401":
           description: Unauthorized operation
+        "409":
+          description: Conflicted operation
         "500":
           description: Internal server error
   /wallet/api/account/saveBackupState:
