@@ -36,7 +36,7 @@ jobs:
            r=exo-addons-snapshots&g=org.exoplatform.addons.news&a=news-services&v=2.5.x-SNAPSHOT&c=swagger&e=yaml
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.SWF_TOKEN }}
 
