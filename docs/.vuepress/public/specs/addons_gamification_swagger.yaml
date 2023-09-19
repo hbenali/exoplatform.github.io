@@ -609,7 +609,7 @@ paths:
         can be of type JSON or XLSX
       description: Retrieves the list of achievements switch a filter. The returned
         format can be of type JSON or XLSX
-      operationId: getRealizations
+      operationId: getRealizations_1
       parameters:
       - name: fromDate
         in: query
@@ -759,6 +759,25 @@ paths:
       responses:
         "200":
           description: Request fulfilled
+  /gamification/realizations/{id}:
+    get:
+      tags:
+      - /gamification/realizations
+      summary: Retrieves an achievement identified by its id
+      operationId: getRealizations
+      parameters:
+      - name: id
+        in: path
+        description: Achievement id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Request fulfilled
+        "401":
+          description: Unauthorized operation
   /gamification/reputation/AllofBadges:
     get:
       operationId: getAllOfBadges
