@@ -193,8 +193,7 @@ paths:
         description: List items
         required: true
         schema:
-          type: integer
-          format: int32
+          type: string
       responses:
         "200":
           description: Request fulfilled
@@ -591,6 +590,49 @@ paths:
           description: Invalid query input
         "404":
           description: Not found
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
+  /v1/documents/importzip/{uploadId}:
+    post:
+      tags:
+      - /v1/documents
+      summary: Import document from a zip
+      description: Import document from a zip
+      operationId: importDocuments
+      parameters:
+      - name: uploadId
+        in: path
+        description: upload id
+        required: true
+        schema:
+          type: string
+      - name: ownerId
+        in: query
+        description: the owner id
+        schema:
+          type: string
+      - name: folderId
+        in: query
+        description: "the folder id, where the documents will be imported"
+        schema:
+          type: string
+      - name: folderPath
+        in: query
+        description: "the folder path, where the documents will be imported"
+        schema:
+          type: string
+      - name: conflict
+        in: query
+        description: the rule to apply in case of conflict
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
         "401":
           description: Unauthorized operation
         "500":
