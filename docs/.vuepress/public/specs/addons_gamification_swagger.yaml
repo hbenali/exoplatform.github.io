@@ -59,73 +59,6 @@ paths:
           description: Object not found
         "401":
           description: Unauthorized operation
-  /gamification/api/v1/events:
-    get:
-      operationId: getAllEvents
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /gamification/api/v1/leaderboard/date:
-    get:
-      operationId: getLeaderboardByDate
-      parameters:
-      - name: earnerType
-        in: query
-        schema:
-          type: string
-      - name: startDate
-        in: query
-        schema:
-          type: string
-      - name: endDate
-        in: query
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /gamification/api/v1/points:
-    get:
-      operationId: getAllPointsByUserId
-      parameters:
-      - name: userId
-        in: query
-        schema:
-          type: string
-      - name: period
-        in: query
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /gamification/api/v1/points/date:
-    get:
-      operationId: getAllPointsByUserIdByDate
-      parameters:
-      - name: userId
-        in: query
-        schema:
-          type: string
-      - name: startDate
-        in: query
-        schema:
-          type: string
-      - name: endDate
-        in: query
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
   /gamification/badges/add:
     post:
       operationId: addBadge
@@ -175,6 +108,199 @@ paths:
           description: default response
           content:
             application/json: {}
+  /gamification/connectors:
+    get:
+      summary: Retrieves the list of remote connectors
+      operationId: getConnectors
+      parameters:
+      - name: username
+        in: query
+        description: Username
+        required: true
+        schema:
+          type: string
+      - name: expand
+        in: query
+        description: Used to retrieve extra information about connectors
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "401":
+          description: Unauthorized operation
+  /gamification/connectors/connect/{connectorName}:
+    post:
+      summary: Validate Remote user identifier on a selected connector and associate
+        it in his current profile.
+      description: Validate Remote user identifier on a selected connector and associate
+        it in his current profile.
+      operationId: connect
+      parameters:
+      - name: connectorName
+        in: path
+        description: Connector name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - accessToken
+              type: object
+              properties:
+                remoteId:
+                  type: string
+                  description: User Remote identifier
+                accessToken:
+                  type: string
+                  description: Access Token
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
+  /gamification/connectors/disconnect/{connectorName}:
+    delete:
+      summary: Deletes an existing connector account
+      description: Deletes an existing connector account
+      operationId: disconnect
+      parameters:
+      - name: connectorName
+        in: path
+        description: Connector name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - remoteId
+              type: object
+              properties:
+                remoteId:
+                  type: string
+                  description: User Remote identifier
+      responses:
+        "204":
+          description: Request fulfilled
+        "401":
+          description: Object not found
+        "400":
+          description: Invalid query input
+        "500":
+          description: Internal server error
+  /gamification/connectors/settings:
+    post:
+      summary: Saves gamification connector settings
+      description: Saves gamification connector settings
+      operationId: saveConnectorSettings
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - apiKey
+              - connectorName
+              - enabled
+              - redirectUrl
+              - secretKey
+              type: object
+              properties:
+                connectorName:
+                  type: string
+                  description: Remote connector name
+                apiKey:
+                  type: string
+                  description: Remote connector Api key
+                secretKey:
+                  type: string
+                  description: Remote connector secret key
+                redirectUrl:
+                  type: string
+                  description: Remote connector redirect Url
+                enabled:
+                  type: boolean
+                  description: Remote connector status
+                  default: true
+      responses:
+        "204":
+          description: Request fulfilled
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
+  /gamification/connectors/settings/{connectorName}:
+    delete:
+      summary: Deletes gamification connector settings
+      description: Deletes gamification connector settings
+      operationId: deleteConnectorSettings
+      parameters:
+      - name: connectorName
+        in: path
+        description: Remote connector name
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Request fulfilled
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
+  /gamification/events:
+    get:
+      summary: Retrieves the list of gamification events
+      operationId: getEvents
+      parameters:
+      - name: type
+        in: query
+        description: Used to filter events by Connector type
+        schema:
+          type: string
+      - name: trigger
+        in: query
+        description: Used to filter events by trigger
+        schema:
+          type: array
+          items:
+            type: string
+      - name: offset
+        in: query
+        description: Offset of results to retrieve
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: limit
+        in: query
+        description: Limit of results to retrieve
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: returnSize
+        in: query
+        description: Returning the total count of filtered events or not.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: Request fulfilled
   /gamification/gameficationinformationsboard/history/all:
     get:
       operationId: getAllLeadersByRank
@@ -759,6 +885,30 @@ paths:
       responses:
         "200":
           description: Request fulfilled
+  /gamification/realizations/points:
+    get:
+      tags:
+      - /gamification/realizations
+      summary: Retrieves the points of a given user in last period type
+      operationId: getAllPointsByUserId
+      parameters:
+      - name: userId
+        in: query
+        description: Username to retrieve its points.
+        required: true
+        schema:
+          type: string
+      - name: period
+        in: query
+        description: "Period Type. Possible values: WEEK or MONTH. Default: WEEK."
+        schema:
+          type: string
+          default: WEEK
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Bad Request
   /gamification/realizations/{id}:
     get:
       tags:
