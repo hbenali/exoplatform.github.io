@@ -9,6 +9,8 @@ info:
 tags:
 - name: v1/social/activities
   description: Managing activities together with comments and likes
+- name: v1/social/attachments
+  description: Managing attachments for any type of data
 - name: v1/social/groupSpaceBindings
   description: API  to manage the binding between a space and an organization group
 - name: v1/social/comments
@@ -101,6 +103,7 @@ paths:
           - USER_FAVORITE_STREAM
           - MANAGE_SPACES_STREAM
           - FAVORITE_SPACES_STREAM
+          - UNREAD_SPACES_STREAM
           - ANY_SPACE_ACTIVITY
           - PIN_STREAM
       responses:
@@ -607,6 +610,114 @@ paths:
           description: Invalid query input
         "401":
           description: Unauthorized
+  /v1/social/attachments:
+    put:
+      tags:
+      - v1/social/attachments
+      summary: Updates the list of attachements of an object
+      description: Updates the list of attachements of an object
+      operationId: saveAttachments
+      requestBody:
+        description: Object file Attachments
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileAttachmentResourceList'
+        required: true
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized request
+        "404":
+          description: Not found
+  /v1/social/attachments/{objectType}/{objectId}:
+    get:
+      tags:
+      - v1/social/attachments
+      summary: Retrieves files of a given object identified by its id
+      description: Retrieves files of a given object identified by its id
+      operationId: getAttachments
+      parameters:
+      - name: objectType
+        in: path
+        description: "Object type: activity, task, notes ..."
+        required: true
+        schema:
+          type: string
+      - name: objectId
+        in: path
+        description: Identifier of object to which attachment will be associated
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized request
+        "404":
+          description: Not found
+  /v1/social/attachments/{objectType}/{objectId}/{fileId}:
+    get:
+      tags:
+      - v1/social/attachments
+      summary: Retrieves file stream content attached to a given object identified
+        by its id
+      description: Retrieves file stream content attached to a given object identified
+        by its id
+      operationId: getAttachment
+      parameters:
+      - name: objectType
+        in: path
+        description: "Object type: activity, task, notes ..."
+        required: true
+        schema:
+          type: string
+      - name: objectId
+        in: path
+        description: Identifier of object to which attachment will be associated
+        required: true
+        schema:
+          type: string
+      - name: fileId
+        in: path
+        description: Identifier of attached file
+        required: true
+        schema:
+          type: string
+      - name: lastModified
+        in: query
+        description: "The value of lastModified parameter will determine whether the\
+          \ query should be cached by browser or not. If not set, no 'expires HTTP\
+          \ Header will be sent'"
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: Resized avatar size. Use 0x0 for original size.
+        schema:
+          type: string
+          default: 0x0
+      - name: download
+        in: query
+        description: Whether to add HTTP Header for download or not
+        required: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized request
+        "404":
+          description: Not found
   /v1/social/comments/{id}:
     get:
       tags:
@@ -4051,6 +4162,35 @@ components:
           type: string
         startDate:
           type: string
+    FileAttachmentObject:
+      type: object
+      properties:
+        altText:
+          type: string
+        id:
+          type: string
+        uploadId:
+          type: string
+    FileAttachmentResourceList:
+      type: object
+      properties:
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileAttachmentObject'
+        objectId:
+          type: string
+        objectType:
+          type: string
+        parentObjectId:
+          type: string
+        uploadedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileAttachmentObject'
+        userIdentityId:
+          type: integer
+          format: int64
     GlobalId:
       type: object
       properties:
