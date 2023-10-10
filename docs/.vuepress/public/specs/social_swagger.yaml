@@ -4643,6 +4643,8 @@ components:
           type: boolean
         isMember:
           type: boolean
+        isMuted:
+          type: string
         isPending:
           type: boolean
         isPublisher:
