@@ -23,6 +23,8 @@ tags:
   description: Managing relationships of identities
 - name: v1/social/search
   description: Operations on search connectors
+- name: v1/social/sites
+  description: Manage sites
 - name: v1/social/spaces
   description: Operations on spaces with their activities and users
 - name: v1/social/spacesMemberships
@@ -1557,6 +1559,210 @@ paths:
           description: Not authorized
         "500":
           description: Internal server error
+  /v1/social/sites:
+    get:
+      tags:
+      - v1/social/sites
+      summary: Gets sites
+      description: Gets sites
+      operationId: getSites
+      parameters:
+      - name: siteType
+        in: query
+        description: "Portal site types, possible values: PORTAL, GROUP or USER"
+        required: true
+        schema:
+          type: string
+      - name: excludedSiteType
+        in: query
+        description: Site type to be excluded
+        schema:
+          type: string
+      - name: excludedSiteName
+        in: query
+        description: Site name to be excluded
+        schema:
+          type: string
+      - name: excludeSpaceSites
+        in: query
+        description: to exclude space sites
+        schema:
+          type: boolean
+          default: false
+      - name: excludeEmptyNavigationSites
+        in: query
+        description: to exclude sites with empty navigation
+        schema:
+          type: boolean
+          default: false
+      - name: expandNavigations
+        in: query
+        description: to expand site navigations nodes
+        schema:
+          type: boolean
+          default: false
+      - name: visibility
+        in: query
+        description: "Multivalued visibilities of navigation nodes to retrieve, possible\
+          \ values: DISPLAYED, HIDDEN, SYSTEM or TEMPORAL. If empty, all visibilities\
+          \ will be used."
+        schema:
+          type: array
+          items:
+            type: string
+            default: All possible values combined
+          default: All possible values combined
+      - name: temporalCheck
+        in: query
+        description: "to check, in expandNavigations case, the navigation nodes scheduling\
+          \ start and end dates"
+        schema:
+          type: boolean
+          default: false
+      - name: excludeGroupNodesWithoutPageChildNodes
+        in: query
+        description: to exclude group nodes without page child nodes
+        schema:
+          type: boolean
+          default: false
+      - name: sortByDisplayOrder
+        in: query
+        description: to sort with display order
+        schema:
+          type: boolean
+          default: false
+      - name: filterByDisplayed
+        in: query
+        description: to filter sites by displayed status
+        schema:
+          type: boolean
+          default: false
+      - name: displayed
+        in: query
+        description: to retrieve sites with displayed status
+        schema:
+          type: boolean
+          default: false
+      - name: filterByPermissions
+        in: query
+        description: to filter sites by view/edit permissions
+        schema:
+          type: boolean
+          default: false
+      - name: offset
+        in: query
+        description: Offset of results to retrieve
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: limit
+        in: query
+        description: Limit of results to retrieve
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: lang
+        in: query
+        description: Used to retrieve the site label and description in the requested
+          language
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+  /v1/social/sites/{siteId}:
+    get:
+      tags:
+      - v1/social/sites
+      summary: Gets a specific site by id
+      description: Gets site by id
+      operationId: getSiteById
+      parameters:
+      - name: siteId
+        in: path
+        description: site Id
+        required: true
+        schema:
+          type: string
+      - name: expandNavigations
+        in: query
+        description: to expand site navigations nodes
+        schema:
+          type: boolean
+          default: false
+      - name: visibility
+        in: query
+        description: "Multivalued visibilities of navigation nodes to retrieve, possible\
+          \ values: DISPLAYED, HIDDEN, SYSTEM or TEMPORAL. If empty, all visibilities\
+          \ will be used."
+        schema:
+          type: array
+          items:
+            type: string
+            default: All possible values combined
+          default: All possible values combined
+      - name: temporalCheck
+        in: query
+        description: "to check, in expandNavigations case, the navigation nodes scheduling\
+          \ start and end dates"
+        schema:
+          type: boolean
+          default: false
+      - name: excludeGroupNodesWithoutPageChildNodes
+        in: query
+        description: to exclude group nodes without page child nodes
+        schema:
+          type: boolean
+          default: false
+      - name: excludeEmptyNavigationSites
+        in: query
+        description: to exclude sites with empty navigation
+        schema:
+          type: boolean
+          default: false
+      - name: lang
+        in: query
+        description: Used to retrieve the site label and description in the requested
+          language
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+  /v1/social/sites/{siteName}/banner:
+    get:
+      tags:
+      - v1/social/sites
+      summary: Gets a site banner
+      operationId: getSiteBanner
+      parameters:
+      - name: siteName
+        in: path
+        description: site name
+        required: true
+        schema:
+          type: string
+      - name: bannerId
+        in: query
+        description: site banner id
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+        "403":
+          description: Forbidden request
+        "404":
+          description: Resource not found
   /v1/social/spaceGroupBindings/getBindingReportOperations:
     get:
       tags:
