@@ -4810,6 +4810,8 @@ components:
           type: string
         canEdit:
           type: boolean
+        canEditNavigations:
+          type: boolean
         createdTime:
           type: string
         dataEntity:
