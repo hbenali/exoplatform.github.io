@@ -4373,6 +4373,8 @@ components:
       properties:
         altText:
           type: string
+        format:
+          type: string
         id:
           type: string
         uploadId:
