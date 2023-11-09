@@ -301,101 +301,75 @@ paths:
       responses:
         "200":
           description: Request fulfilled
-  /gamification/gameficationinformationsboard/history/all:
+  /gamification/leaderboard:
     get:
-      operationId: getAllLeadersByRank
-      parameters:
-      - name: capacity
-        in: query
-        schema:
-          type: string
-      - name: providerId
-        in: query
-        schema:
-          type: string
-      - name: remoteId
-        in: query
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /gamification/leaderboard/filter:
-    get:
-      operationId: filter
+      summary: Retrieve the list leaderboard users/spaces including the selected identity
+        to retrieve its rank
+      operationId: getIdentityLeaderboard
       parameters:
       - name: programId
         in: query
+        description: Program technical identifier to filter
+        schema:
+          type: integer
+          format: int64
+      - name: identityType
+        in: query
+        description: "Type of leaderboard, whether users or spaces"
+        schema:
+          type: string
+          default: USER
+          enum:
+          - USER
+          - SPACE
+      - name: identityId
+        in: query
+        description: Identity technical identifier to filter
         schema:
           type: integer
           format: int64
       - name: period
         in: query
+        description: "Current period: WEEK, MONTH or ALL"
         schema:
           type: string
-      - name: capacity
-        in: query
-        schema:
-          type: integer
-          format: int32
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /gamification/leaderboard/rank/all:
-    get:
-      operationId: getAllLeadersByRank_1
-      parameters:
-      - name: earnerType
-        in: query
-        description: Get leaderboard of user or space
-        schema:
-          type: string
-          default: user
+          default: WEEK
       - name: limit
         in: query
-        description: Limit of identities to retrieve
+        description: "Current period: WEEK, MONTH or ALL"
         schema:
           type: integer
           format: int32
-          default: 10
-      - name: period
-        in: query
-        description: "Period name, possible values: WEEK, MONTH or ALL"
-        schema:
-          type: string
-          default: ALL
-      - name: loadCapacity
-        in: query
-        description: Get only the top 10 or all
-        schema:
-          type: boolean
-          default: true
+          default: 0
       responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /gamification/leaderboard/stats:
+        "200":
+          description: Request fulfilled
+        "401":
+          description: Unauthorized operation
+  /gamification/leaderboard/stats/{identityId}:
     get:
-      operationId: stats
+      summary: "Retrieves identity gamification statistics classified by program,\
+        \ ready to be displayed in a pie chart"
+      operationId: getIdentityStats
       parameters:
-      - name: username
-        in: query
+      - name: identityId
+        in: path
+        description: Identity technical identifier
+        required: true
         schema:
           type: string
       - name: period
         in: query
+        description: "Current period to consider. Possible values: WEEK, MONTH or\
+          \ ALL"
         schema:
           type: string
+          default: WEEK
       responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
+        "200":
+          description: Request fulfilled
+        "401":
+          description: Unauthorized operation
   /gamification/programs:
     get:
       summary: Retrieves the list of available programs
@@ -735,7 +709,7 @@ paths:
         can be of type JSON or XLSX
       description: Retrieves the list of achievements switch a filter. The returned
         format can be of type JSON or XLSX
-      operationId: getRealizations_1
+      operationId: getRealizations
       parameters:
       - name: fromDate
         in: query
@@ -787,7 +761,7 @@ paths:
         schema:
           type: string
           default: json
-      - name: earnerType
+      - name: identityType
         in: query
         description: "Earner type, either USER or SPACE. Default: USER"
         schema:
@@ -828,6 +802,14 @@ paths:
         in: query
         description: "If true, this will return the list of realizations, the current\
           \ user can manage. Possible values = true or false. Default value = false."
+        schema:
+          type: boolean
+          default: false
+      - name: allPrograms
+        in: query
+        description: "If true, this will return all realizations, even the ones where\
+          \ user can't access, will be retrieved by anonymizing the associated program\
+          \ and rule"
         schema:
           type: boolean
           default: false
@@ -914,7 +896,7 @@ paths:
       tags:
       - /gamification/realizations
       summary: Retrieves an achievement identified by its id
-      operationId: getRealizations
+      operationId: getRealization
       parameters:
       - name: id
         in: path
@@ -1328,45 +1310,6 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
-  /gamification/space/leaderboard/filter:
-    get:
-      operationId: filter_1
-      parameters:
-      - name: program
-        in: query
-        schema:
-          type: integer
-          format: int64
-      - name: period
-        in: query
-        schema:
-          type: string
-      - name: url
-        in: query
-        schema:
-          type: string
-      - name: capacity
-        in: query
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /gamification/space/leaderboard/overall:
-    get:
-      operationId: getAllLeadersByRank_2
-      parameters:
-      - name: url
-        in: query
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
 components:
   schemas:
     AnnouncementActivity:
@@ -1501,6 +1444,11 @@ components:
           type: string
         type:
           type: string
+        visibility:
+          type: string
+          enum:
+          - RESTRICTED
+          - OPEN
     RulePublication:
       type: object
       properties:
