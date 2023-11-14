@@ -1077,7 +1077,7 @@ components:
           type: object
           additionalProperties:
             type: string
-        themeColors:
+        themeStyle:
           type: object
           additionalProperties:
             type: string
