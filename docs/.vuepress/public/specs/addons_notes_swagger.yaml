@@ -37,6 +37,12 @@ paths:
         in: query
         schema:
           type: boolean
+      - name: tags
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         default:
           description: default response
