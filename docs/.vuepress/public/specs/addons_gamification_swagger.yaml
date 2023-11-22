@@ -129,43 +129,6 @@ paths:
           description: Request fulfilled
         "401":
           description: Unauthorized operation
-  /gamification/connectors/connect/{connectorName}:
-    post:
-      summary: Validate Remote user identifier on a selected connector and associate
-        it in his current profile.
-      description: Validate Remote user identifier on a selected connector and associate
-        it in his current profile.
-      operationId: connect
-      parameters:
-      - name: connectorName
-        in: path
-        description: Connector name
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              required:
-              - accessToken
-              type: object
-              properties:
-                remoteId:
-                  type: string
-                  description: User Remote identifier
-                accessToken:
-                  type: string
-                  description: Access Token
-      responses:
-        "200":
-          description: Request fulfilled
-        "400":
-          description: Invalid query input
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
   /gamification/connectors/disconnect/{connectorName}:
     delete:
       summary: Deletes an existing connector account
@@ -196,6 +159,35 @@ paths:
           description: Object not found
         "400":
           description: Invalid query input
+        "500":
+          description: Internal server error
+  /gamification/connectors/oauthCallback/{connectorName}:
+    get:
+      summary: Validate Remote user identifier on a selected connector and associate
+        it in his current profile.
+      description: Validate Remote user identifier on a selected connector and associate
+        it in his current profile.
+      operationId: connect
+      parameters:
+      - name: connectorName
+        in: path
+        description: Connector name
+        required: true
+        schema:
+          type: string
+      - name: code
+        in: query
+        description: Access Token
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
         "500":
           description: Internal server error
   /gamification/connectors/settings:
@@ -324,7 +316,7 @@ paths:
           - SPACE
       - name: identityId
         in: query
-        description: Identity technical identifier to filter
+        description: Identity technical identifier to include in results
         schema:
           type: integer
           format: int64
@@ -334,9 +326,16 @@ paths:
         schema:
           type: string
           default: WEEK
+      - name: offset
+        in: query
+        description: Results offset
+        schema:
+          type: integer
+          format: int32
+          default: 0
       - name: limit
         in: query
-        description: "Current period: WEEK, MONTH or ALL"
+        description: Results limit
         schema:
           type: integer
           format: int32

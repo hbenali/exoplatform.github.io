@@ -2621,10 +2621,16 @@ paths:
           type: string
       - name: id
         in: path
-        description: Space pretty name
+        description: Space pretty name or space id
         required: true
         schema:
           type: string
+      - name: byId
+        in: query
+        description: Whether to retrieve avatar by id or pretty name
+        schema:
+          type: boolean
+          default: false
       - name: size
         in: query
         description: Resized avatar size. Use 0x0 for original size.
@@ -2666,6 +2672,12 @@ paths:
         required: true
         schema:
           type: string
+      - name: byId
+        in: query
+        description: Whether to retrieve banner by id or pretty name
+        schema:
+          type: boolean
+          default: false
       - name: r
         in: query
         description: A mandatory valid token that is used to authorize anonymous request
@@ -3781,6 +3793,13 @@ paths:
         required: true
         schema:
           type: string
+      - name: byId
+        in: query
+        description: Whether to retrieve avatar by identity id or username
+        required: true
+        schema:
+          type: boolean
+          default: false
       - name: lastModified
         in: query
         description: "The value of lastModified parameter will determine whether the\
@@ -3824,6 +3843,13 @@ paths:
         required: true
         schema:
           type: string
+      - name: byId
+        in: query
+        description: Whether to retrieve banner by identity id or username
+        required: true
+        schema:
+          type: boolean
+          default: false
       - name: lastModified
         in: query
         description: "The value of lastModified parameter will determine whether the\
