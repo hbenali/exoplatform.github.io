@@ -998,6 +998,8 @@ components:
           type: object
           additionalProperties:
             type: string
+        restrictedAudience:
+          type: boolean
     NewsTargetingPermissionsEntity:
       type: object
       properties:

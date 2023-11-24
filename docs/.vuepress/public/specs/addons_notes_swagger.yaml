@@ -62,6 +62,12 @@ paths:
         description: Note id
         required: true
         schema:
+          type: integer
+          format: int64
+      - name: lang
+        in: query
+        description: draft content language
+        schema:
           type: string
       responses:
         "200":
@@ -94,6 +100,21 @@ paths:
           description: Unauthorized operation
         "404":
           description: Resource not found
+  /notes/languages:
+    get:
+      tags:
+      - /notes
+      operationId: getAvailableLanguages
+      parameters:
+      - name: lang
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
   /notes/latestDraftNote/{noteId}:
     get:
       tags:
@@ -107,6 +128,11 @@ paths:
         in: path
         description: Note id
         required: true
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: draft content language
         schema:
           type: string
       responses:
@@ -312,6 +338,59 @@ paths:
           description: Unauthorized operation
         "404":
           description: Resource not found
+  /notes/note/translation/{noteId}:
+    get:
+      tags:
+      - /notes
+      summary: Get available translation languages by page id
+      description: This get gets the available translation languages by page id.
+      operationId: getPageAvailableTranslationLanguages
+      parameters:
+      - name: noteId
+        in: path
+        description: Note id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: withDrafts
+        in: query
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "500":
+          description: Server internal error
+  /notes/note/translation/{noteId}/{lang}:
+    delete:
+      tags:
+      - /notes
+      summary: Delete translation by page id and language
+      description: This deletes translation by page id and language
+      operationId: deleteTranslations
+      parameters:
+      - name: noteId
+        in: path
+        description: Note id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: lang
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "500":
+          description: Server internal error
   /notes/note/{noteBookType}/{noteBookOwner}/{noteId}:
     get:
       tags:
@@ -343,6 +422,11 @@ paths:
         in: query
         description: source
         required: true
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: note content language
         schema:
           type: string
       responses:
@@ -462,6 +546,11 @@ paths:
       - name: source
         in: query
         description: source
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: note content language
         schema:
           type: string
       responses:
@@ -635,6 +724,10 @@ paths:
         in: query
         schema:
           type: boolean
+      - name: lang
+        in: query
+        schema:
+          type: string
       - name: depth
         in: query
         schema:
@@ -661,6 +754,11 @@ paths:
         in: path
         description: Note id
         required: true
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: versions content language
         schema:
           type: string
       responses:
@@ -736,6 +834,8 @@ components:
         hasChild:
           type: boolean
         id:
+          type: string
+        lang:
           type: string
         metadatas:
           type: object
@@ -897,6 +997,8 @@ components:
         hasChild:
           type: boolean
         id:
+          type: string
+        lang:
           type: string
         metadatas:
           type: object
