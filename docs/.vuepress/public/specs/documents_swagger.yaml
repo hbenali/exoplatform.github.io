@@ -543,6 +543,11 @@ paths:
         description: Folder technical identifier
         schema:
           type: string
+      - name: withChildren
+        in: query
+        description: Folder technical identifier
+        schema:
+          type: boolean
       responses:
         "200":
           description: Request fulfilled
