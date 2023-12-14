@@ -1086,6 +1086,41 @@ paths:
           description: Internal server error
         "400":
           description: Invalid query input
+  /v1/social/identities/byParams:
+    get:
+      tags:
+      - v1/social/identities
+      summary: Gets an identity by id
+      description: This returns the identity if the authenticated user has permissions
+        to view the object linked to this identity.
+      operationId: getIdentityByProviderIdAndRemoteIdInQuery
+      parameters:
+      - name: providerId
+        in: query
+        description: Identity provider id which can be of type 'space' or 'organization'
+          for example
+        required: true
+        schema:
+          type: string
+      - name: remoteId
+        in: query
+        description: Identity id which is the unique name (remote id) of identity
+        required: true
+        schema:
+          type: string
+      - name: expand
+        in: query
+        description: Asking for a full representation of a specific subresource if
+          any
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
+        "400":
+          description: Invalid query input
   /v1/social/identities/{id}:
     get:
       tags:

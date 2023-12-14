@@ -1134,6 +1134,13 @@ paths:
         schema:
           type: boolean
           default: true
+      - name: includeDeleted
+        in: query
+        description: "If true, this will return the filtered rules including deleted\
+          \ ones. Possible values = true or false. Default value = false."
+        schema:
+          type: boolean
+          default: false
       - name: realizationsLimit
         in: query
         description: Accepted users realizations count
