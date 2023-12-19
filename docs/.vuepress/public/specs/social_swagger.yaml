@@ -4833,6 +4833,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProfilePropertySettingEntity'
+        default:
+          type: boolean
         editable:
           type: boolean
         groupSynchronizationEnabled:
