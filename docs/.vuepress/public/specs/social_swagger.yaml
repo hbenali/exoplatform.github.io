@@ -4990,6 +4990,8 @@ components:
         redactorsCount:
           type: integer
           format: int32
+        siteId:
+          type: string
         subscription:
           type: string
         template:
