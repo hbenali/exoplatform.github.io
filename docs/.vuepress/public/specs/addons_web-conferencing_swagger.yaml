@@ -10,6 +10,38 @@ tags:
 - name: /webconferencing
   description: Operations on call providers and participant information
 paths:
+  /webconferencing/context:
+    get:
+      tags:
+      - /webconferencing
+      summary: Return the current context of the call
+      description: Use this method to read the current context of the call. This operation
+        is available to all Platform users.
+      operationId: getContext
+      parameters:
+      - name: name
+        in: query
+        description: User name
+        required: true
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: Language
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled. Call context object returned.
+        "400":
+          description: "Wrong request parameters: name or language. Error code: CLIENT_ERROR"
+        "401":
+          description: "Unauthorized user (conversation state not present). Error\
+            \ code: ACCESS_ERROR"
+        "500":
+          description: "Internal server error due to data encoding or formatting result\
+            \ to JSON. Error code: SERVER_ERROR"
   /webconferencing/provider/{type}/configuration:
     get:
       tags:
