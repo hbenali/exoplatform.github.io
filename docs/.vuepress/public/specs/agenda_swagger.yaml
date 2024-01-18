@@ -1936,6 +1936,8 @@ components:
           type: string
         identity:
           $ref: '#/components/schemas/SpaceEntity'
+        identityId:
+          $ref: '#/components/schemas/SpaceEntity'
         invitedMembers:
           type: array
           items:
