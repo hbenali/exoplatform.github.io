@@ -25,6 +25,12 @@ paths:
         required: true
         schema:
           type: string
+      - name: spaceId
+        in: query
+        description: Space Id
+        required: true
+        schema:
+          type: string
       - name: lang
         in: query
         description: Language
