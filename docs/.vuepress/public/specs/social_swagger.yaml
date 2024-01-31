@@ -3261,6 +3261,16 @@ paths:
           \ name or full name"
         schema:
           type: string
+      - name: searchEmail
+        in: query
+        description: Is search with email
+        schema:
+          type: boolean
+      - name: searchUsername
+        in: query
+        description: Is search with username
+        schema:
+          type: boolean
       - name: status
         in: query
         description: "User status to filter online users, ex: online"
