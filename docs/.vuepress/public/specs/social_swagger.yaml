@@ -4620,6 +4620,8 @@ components:
         createdTime:
           type: integer
           format: int64
+        defaultAvatar:
+          type: boolean
         department:
           type: string
         email:
@@ -4731,6 +4733,8 @@ components:
               type: boolean
           additionalProperties:
             type: object
+        defaultAvatar:
+          type: boolean
         deleted:
           type: string
         department:

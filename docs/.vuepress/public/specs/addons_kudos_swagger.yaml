@@ -465,6 +465,8 @@ components:
         activityId:
           type: integer
           format: int64
+        enabledReceiver:
+          type: boolean
         entityId:
           type: string
         entityType:
