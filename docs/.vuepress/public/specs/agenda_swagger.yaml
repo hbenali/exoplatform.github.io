@@ -1676,6 +1676,8 @@ components:
         createdTime:
           type: integer
           format: int64
+        defaultAvatar:
+          type: boolean
         department:
           type: string
         email:
@@ -1787,6 +1789,8 @@ components:
               type: boolean
           additionalProperties:
             type: object
+        defaultAvatar:
+          type: boolean
         deleted:
           type: string
         department:
@@ -1817,6 +1821,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/IMEntity'
+        isAdmin:
+          type: string
         isExternal:
           $ref: '#/components/schemas/ProfileEntity'
         isGroupBound:
