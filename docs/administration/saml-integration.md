@@ -19,7 +19,7 @@ consumes it. The following scenario describes a SAML2 exchange:
 7. The browser requests target resource again.
 8. The SP finds a security context, so it returns the target resource.
 
-![image0](/img/administration/saml/salm-sequence.png)
+![image0](/img/saml/saml-sequence.png)
 
 eXo Platform SAML integration supports the SP role thus can be
 integrated with various [IdP providers](https://en.wikipedia.org/wiki/SAML-based_products_and_services)
