@@ -935,18 +935,6 @@ paths:
           description: Navigation does not exist
         "500":
           description: Internal server error
-  /v1/navigations/categories:
-    get:
-      tags:
-      - v1/navigations
-      summary: Gets navigations categories for UI
-      description: Gets navigations categories for UI
-      operationId: getNavigationCategories
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
   /v1/navigations/{siteType}:
     get:
       tags:
