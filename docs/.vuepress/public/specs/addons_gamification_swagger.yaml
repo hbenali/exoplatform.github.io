@@ -253,46 +253,6 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
-  /gamification/events:
-    get:
-      summary: Retrieves the list of gamification events
-      operationId: getEvents
-      parameters:
-      - name: type
-        in: query
-        description: Used to filter events by Connector type
-        schema:
-          type: string
-      - name: trigger
-        in: query
-        description: Used to filter events by trigger
-        schema:
-          type: array
-          items:
-            type: string
-      - name: offset
-        in: query
-        description: Offset of results to retrieve
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: limit
-        in: query
-        description: Limit of results to retrieve
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: returnSize
-        in: query
-        description: Returning the total count of filtered events or not.
-        schema:
-          type: boolean
-          default: false
-      responses:
-        "200":
-          description: Request fulfilled
   /gamification/leaderboard:
     get:
       summary: Retrieve the list leaderboard users/spaces including the selected identity
@@ -1056,6 +1016,11 @@ paths:
           items:
             type: integer
             format: int64
+      - name: eventName
+        in: query
+        description: Used to filter rules by event name
+        schema:
+          type: string
       - name: type
         in: query
         description: "Rules type filtering, possible values: AUTOMATIC, MANUAL and\
@@ -1316,6 +1281,59 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
+  /gamification/triggers:
+    get:
+      summary: Retrieves the list of gamification triggers
+      operationId: getTriggers
+      parameters:
+      - name: type
+        in: query
+        description: Used to filter triggers by Connector type
+        schema:
+          type: string
+      - name: expand
+        in: query
+        description: Used to retrieve extra information about triggers
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+  /gamification/triggers/status:
+    post:
+      summary: enables/disables trigger for connector account.
+      description: enables/disables event for connector account
+      operationId: updateAccountTriggerStatus
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              required:
+              - accountId
+              - enabled
+              - trigger
+              type: object
+              properties:
+                trigger:
+                  type: string
+                  description: Trigger name
+                accountId:
+                  type: integer
+                  description: Account Id
+                  format: int64
+                enabled:
+                  type: boolean
+                  description: "Trigger status enabled/disabled. possible values:\
+                    \ true for enabled, else false"
+      responses:
+        "204":
+          description: Request fulfilled
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
 components:
   schemas:
     AnnouncementActivity:
@@ -1386,6 +1404,26 @@ components:
         title:
           type: string
         uploadId:
+          type: string
+    EventDTO:
+      type: object
+      properties:
+        cancellerEvents:
+          type: array
+          items:
+            type: string
+        id:
+          type: integer
+          format: int64
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+        title:
+          type: string
+        trigger:
+          type: string
+        type:
           type: string
     ProgramDTO:
       type: object
@@ -1480,7 +1518,7 @@ components:
         endDate:
           type: string
         event:
-          type: string
+          $ref: '#/components/schemas/EventDTO'
         id:
           type: integer
           format: int64
