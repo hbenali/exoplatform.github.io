@@ -2671,7 +2671,7 @@ paths:
         description: Resized avatar size. Use 0x0 for original size.
         schema:
           type: string
-          default: 45x45
+          default: 100x100
       - name: r
         in: query
         description: A mandatory valid token that is used to authorize anonymous request
@@ -3857,7 +3857,7 @@ paths:
         description: Resized avatar size. Use 0x0 for original size.
         schema:
           type: string
-          default: 45x45
+          default: 100x100
       - name: r
         in: query
         description: A mandatory valid token that is used to authorize anonymous request
