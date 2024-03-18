@@ -1850,6 +1850,12 @@ components:
           type: string
         location:
           type: string
+        managedUsersCount:
+          type: string
+        managers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataEntity'
         notValid:
           type: boolean
         phones:
@@ -1861,7 +1867,9 @@ components:
         profession:
           type: string
         properties:
-          type: string
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilePropertySettingEntity'
         relationshipStatus:
           type: string
         spacesCount:
@@ -1880,8 +1888,72 @@ components:
             $ref: '#/components/schemas/URLEntity'
         username:
           type: string
+    ProfileLabel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        label:
+          type: string
+        language:
+          type: string
+        objectId:
+          type: string
+        objectType:
+          type: string
     ProfileLoader:
       type: object
+    ProfilePropertySettingEntity:
+      type: object
+      properties:
+        active:
+          type: boolean
+        default:
+          type: boolean
+        editable:
+          type: boolean
+        groupSynchronizationEnabled:
+          type: boolean
+        groupSynchronized:
+          type: boolean
+        hidden:
+          type: boolean
+        hiddenable:
+          type: boolean
+        id:
+          type: integer
+          format: int64
+        internal:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfileLabel'
+        multiValued:
+          type: boolean
+        order:
+          type: integer
+          format: int64
+        parentId:
+          type: integer
+          format: int64
+        propertyName:
+          type: string
+        propertyType:
+          type: string
+        required:
+          type: boolean
+        resolvedLabel:
+          type: string
+        toHide:
+          type: boolean
+        toShow:
+          type: boolean
+        value:
+          type: string
+        visible:
+          type: boolean
     RemoteProvider:
       type: object
       properties:
