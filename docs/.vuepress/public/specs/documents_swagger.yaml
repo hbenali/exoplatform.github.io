@@ -145,6 +145,39 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
+  /v1/documents/biggest/{ownerId}:
+    get:
+      tags:
+      - /v1/documents
+      summary: Get biggest documents
+      operationId: getBiggestDocuments
+      parameters:
+      - name: ownerId
+        in: path
+        description: "Identity technical identifier, required = true"
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: offset
+        in: query
+        description: Offset of results to return
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: limit
+        in: query
+        description: Limit of results to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        "200":
+          description: Request fulfilled
+        "500":
+          description: Internal server error
   /v1/documents/breadcrumb:
     get:
       tags:
@@ -1191,6 +1224,9 @@ components:
         path:
           type: string
         size:
+          type: integer
+          format: int64
+        sizeWithVersions:
           type: integer
           format: int64
         sourceID:

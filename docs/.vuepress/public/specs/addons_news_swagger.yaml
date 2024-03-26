@@ -100,78 +100,6 @@ paths:
           description: User not authorized to create the news
         "500":
           description: Internal server error
-  /v1/news/attachments/{attachmentId}:
-    get:
-      tags:
-      - v1/news
-      summary: Get a news attachment
-      description: This gets the news attachment with the given id if the authenticated
-        user is a member of the space or a spaces super manager.
-      operationId: getNewsAttachmentById
-      parameters:
-      - name: attachmentId
-        in: path
-        description: News attachment id
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: News returned
-        "401":
-          description: User not authorized to get the news
-        "404":
-          description: News not found
-        "500":
-          description: Internal server error
-  /v1/news/attachments/{attachmentId}/file:
-    get:
-      tags:
-      - v1/news
-      summary: Download a news attachment
-      description: This downloads the news attachment with the given id if the authenticated
-        user is a member of the space or a spaces super manager.
-      operationId: getNewsAttachmentBinaryById
-      parameters:
-      - name: attachmentId
-        in: path
-        description: News attachment id
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: News returned
-        "401":
-          description: User not authorized to get the news
-        "404":
-          description: News not found
-        "500":
-          description: Internal server error
-  /v1/news/attachments/{attachmentId}/open:
-    get:
-      tags:
-      - v1/news
-      summary: Opens a news attachment
-      description: This opens the news attachment with the given id if the authenticated
-        user is a member of the space or a spaces super manager.
-      operationId: openNewsAttachmentById
-      parameters:
-      - name: attachmentId
-        in: path
-        description: News attachment id
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: News returned
-        "401":
-          description: User not authorized to get the news
-        "404":
-          description: News not found
-        "500":
-          description: Internal server error
   /v1/news/byActivity/{activityId}:
     get:
       tags:
@@ -561,6 +489,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: type
+        in: query
+        description: News object type to be fetched
+        schema:
+          type: string
       - name: editMode
         in: query
         description: Is edit mode
@@ -595,6 +528,11 @@ paths:
         description: Post news
         schema:
           type: boolean
+      - name: type
+        in: query
+        description: News object type to be updated
+        schema:
+          type: string
       requestBody:
         description: News object to be updated
         content:
@@ -723,6 +661,11 @@ paths:
         schema:
           type: integer
           format: int64
+      - name: type
+        in: query
+        description: News object type to be fetched
+        schema:
+          type: string
       - name: size
         in: query
         description: resized image size
@@ -888,8 +831,6 @@ components:
           type: string
         draftUpdaterUserName:
           type: string
-        draftVisible:
-          type: boolean
         favorite:
           type: boolean
         hiddenSpace:
