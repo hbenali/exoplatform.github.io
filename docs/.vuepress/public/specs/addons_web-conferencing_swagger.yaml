@@ -170,6 +170,13 @@ paths:
       description: Use this method to read all providers configuration. This operation
         only available to Administrator user.
       operationId: getProviderConfigs
+      parameters:
+      - name: spaceIdentityId
+        in: query
+        description: Space pretty name
+        required: true
+        schema:
+          type: string
       responses:
         "200":
           description: Request fulfilled. Providers configurations returned.
