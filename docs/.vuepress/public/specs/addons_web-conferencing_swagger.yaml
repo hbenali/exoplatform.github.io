@@ -168,7 +168,7 @@ paths:
       - /webconferencing
       summary: Read call providers configurations
       description: Use this method to read all providers configuration. This operation
-        only available to Administrator user.
+        only available to all users.
       operationId: getProviderConfigs
       parameters:
       - name: spaceIdentityId
@@ -177,6 +177,12 @@ paths:
         required: true
         schema:
           type: string
+      - name: ignoreEnabled
+        in: query
+        description: Ignore Enabled space parameter
+        schema:
+          type: boolean
+          default: false
       responses:
         "200":
           description: Request fulfilled. Providers configurations returned.
@@ -323,6 +329,11 @@ paths:
         required: true
         schema:
           type: boolean
+      - name: provider
+        in: query
+        description: provider
+        schema:
+          type: string
       responses:
         "200":
           description: Request fulfilled
@@ -386,6 +397,8 @@ components:
       properties:
         connectorId:
           type: string
+        enabled:
+          type: boolean
         integratedConnector:
           type: boolean
         name:

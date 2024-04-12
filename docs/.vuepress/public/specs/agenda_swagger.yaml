@@ -1163,31 +1163,6 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
-  /v1/agenda/settings/webConferencing:
-    post:
-      tags:
-      - /v1/agenda/settings
-      summary: Saves enabled web conferencing provider to use for all users
-      description: Saves enabled web conferencing provider to use for all users
-      operationId: saveEnabledWebConferencing
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              required:
-              - providerName
-              type: object
-              properties:
-                providerName:
-                  type: string
-                  description: Web conferencing provider name
-      responses:
-        "204":
-          description: Request fulfilled
-        "401":
-          description: Unauthorized operation
-        "500":
-          description: Internal server error
 components:
   schemas:
     AgendaUserSettings:
