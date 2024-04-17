@@ -15,6 +15,8 @@ tags:
   description: API  to manage the binding between a space and an organization group
 - name: v1/social/comments
   description: Operations on a comment
+- name: v1/social/complementaryfilter
+  description: Managing complementary filter
 - name: v1/social/favorites
   description: Managing favorites for any type of data
 - name: v1/social/identities
@@ -919,6 +921,49 @@ paths:
         "400":
           description: Invalid query input
       deprecated: true
+  /v1/social/complementaryfilter/suggestions/{indexAlias}:
+    post:
+      tags:
+      - v1/social/complementaryfilter
+      summary: Gets complementary filter suggestions
+      description: Gets complementary filter suggestions based on attributes
+      operationId: getComplementaryFilterSuggestions
+      parameters:
+      - name: attributes
+        in: query
+        description: filter attributes
+        schema:
+          type: array
+          items:
+            type: string
+      - name: minDocCount
+        in: query
+        description: min count of occurrence
+        schema:
+          type: integer
+          format: int32
+          default: 2
+      - name: indexAlias
+        in: path
+        description: target search index alias
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: filter object ids
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
   /v1/social/favorites:
     get:
       tags:
@@ -3423,6 +3468,17 @@ paths:
           any
         schema:
           type: string
+      - name: q
+        in: query
+        description: "User name information to filter, ex: user name, last name, first\
+          \ name or full name"
+        schema:
+          type: string
+      - name: excludeCurrentUser
+        in: query
+        description: Whether to exclude current user from search result
+        schema:
+          type: boolean
       requestBody:
         description: pam user settings profile
         content:
@@ -4765,6 +4821,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/IMEntity'
+        isAdmin:
+          type: string
         isExternal:
           $ref: '#/components/schemas/ProfileEntity'
         isGroupBound:
@@ -4855,6 +4913,10 @@ components:
           type: boolean
         groupSynchronized:
           type: boolean
+        hidden:
+          type: boolean
+        hiddenable:
+          type: boolean
         id:
           type: integer
           format: int64
@@ -4878,6 +4940,10 @@ components:
           type: boolean
         resolvedLabel:
           type: string
+        toHide:
+          type: boolean
+        toShow:
+          type: boolean
         value:
           type: string
         visible:
