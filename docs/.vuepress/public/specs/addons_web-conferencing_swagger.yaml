@@ -329,6 +329,11 @@ paths:
         required: true
         schema:
           type: boolean
+      - name: provider
+        in: query
+        description: provider
+        schema:
+          type: string
       responses:
         "200":
           description: Request fulfilled
@@ -392,6 +397,8 @@ components:
       properties:
         connectorId:
           type: string
+        enabled:
+          type: boolean
         integratedConnector:
           type: boolean
         name:

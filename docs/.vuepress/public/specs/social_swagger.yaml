@@ -4850,6 +4850,12 @@ components:
           type: string
         location:
           type: string
+        managedUsersCount:
+          type: string
+        managers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataEntity'
         notValid:
           type: boolean
         phones:
@@ -4861,7 +4867,9 @@ components:
         profession:
           type: string
         properties:
-          type: string
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfilePropertySettingEntity'
         relationshipStatus:
           type: string
         spacesCount:
@@ -4901,10 +4909,6 @@ components:
       properties:
         active:
           type: boolean
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProfilePropertySettingEntity'
         default:
           type: boolean
         editable:
@@ -4935,6 +4939,8 @@ components:
           type: integer
           format: int64
         propertyName:
+          type: string
+        propertyType:
           type: string
         required:
           type: boolean
