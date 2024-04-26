@@ -21,6 +21,8 @@ tags:
   description: Managing favorites for any type of data
 - name: v1/social/identities
   description: Managing identities
+- name: applications
+  description: Managing Application Registry
 - name: v1/social/relationships
   description: Managing relationships of identities
 - name: v1/social/search
@@ -40,6 +42,39 @@ tags:
 - name: v1/social/users
   description: "Operations on users with their activities, connections and spaces"
 paths:
+  /applications:
+    get:
+      tags:
+      - applications
+      summary: Gets all applications
+      description: This returns a list of all supported applications of type Portlet.
+      operationId: getApplications
+      parameters:
+      - name: expand
+        in: query
+        description: Allow to include optional resource properties when needed
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
+  /applications/categories:
+    get:
+      tags:
+      - applications
+      summary: Gets all application categories
+      description: This returns a list of application categories as configured in
+        application registry
+      operationId: getApplicationCategories
+      parameters:
+      - name: expand
+        in: query
+        description: Allow to include optional resource properties when needed
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request fulfilled
   /v1/social/activities:
     get:
       tags:
@@ -4369,6 +4404,10 @@ components:
           format: date-time
         storageId:
           type: string
+        supportedModes:
+          type: array
+          items:
+            type: string
         type:
           $ref: '#/components/schemas/ApplicationTypeObject'
     ApplicationTypeObject:
