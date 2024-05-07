@@ -727,6 +727,51 @@ paths:
           description: Unauthorized operation
         "500":
           description: Internal server error
+  /wallet/api/reward/periods:
+    get:
+      tags:
+      - /wallet/api/reward
+      summary: Retrieves the list of periods sorted descending by start date
+      description: returns the list of periods sorted descending by start date
+      operationId: getRewardReportPeriods
+      parameters:
+      - name: from
+        in: query
+        description: Offset of results to retrieve
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: to
+        in: query
+        description: Offset of results to retrieve
+        schema:
+          type: integer
+          format: int64
+          default: 0
+      - name: offset
+        in: query
+        description: Offset of results to retrieve
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: limit
+        in: query
+        description: Limit of results to retrieve
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: Unauthorized operation
+        "500":
+          description: Internal server error
   /wallet/api/reward/send:
     get:
       tags:

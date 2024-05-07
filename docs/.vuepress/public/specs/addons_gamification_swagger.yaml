@@ -731,8 +731,8 @@ paths:
           - SPACE
       - name: status
         in: query
-        description: "Realization status. Possible values: ACCEPTED, REJECTED, CANCELED,\
-          \ DELETED"
+        description: "Realization status. Possible values: ACCEPTED, PENDING, REJECTED,\
+          \ CANCELED, DELETED"
         schema:
           type: string
           enum:
@@ -741,6 +741,7 @@ paths:
           - REJECTED
           - CANCELED
           - DELETED
+          - PENDING
       - name: programIds
         in: query
         description: Program technical identifiers. that will be used to filter achievements
@@ -752,6 +753,14 @@ paths:
       - name: ruleIds
         in: query
         description: Rule technical identifiers that will be used to filter achievements
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+      - name: reviewerIds
+        in: query
+        description: "reviewerIds, that will be used to filter achievements"
         schema:
           type: array
           items:
