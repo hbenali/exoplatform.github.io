@@ -1925,6 +1925,9 @@ components:
           type: boolean
         toShow:
           type: boolean
+        updated:
+          type: integer
+          format: int64
         value:
           type: string
         visible:

@@ -3689,6 +3689,24 @@ paths:
           description: default response
           content:
             application/json: {}
+  /v1/social/users/userCardSettings:
+    get:
+      tags:
+      - v1/social/users
+      summary: Gets the field settings of a user card
+      description: Gets the field settings of a user card
+      operationId: getUserCardSettings
+      responses:
+        "200":
+          description: Request fulfilled
+        "400":
+          description: Invalid query input
+        "401":
+          description: User does not have permissions to get it
+        "404":
+          description: Setting does not exist
+        "500":
+          description: Internal server error
   /v1/social/users/{id}:
     get:
       tags:
@@ -4989,6 +5007,9 @@ components:
           type: boolean
         toShow:
           type: boolean
+        updated:
+          type: integer
+          format: int64
         value:
           type: string
         visible:
