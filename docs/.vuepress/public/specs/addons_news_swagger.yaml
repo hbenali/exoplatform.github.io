@@ -763,6 +763,9 @@ components:
         spaceId:
           type: integer
           format: int64
+        updatedDate:
+          type: integer
+          format: int64
     MetadataObject:
       type: object
       properties:
