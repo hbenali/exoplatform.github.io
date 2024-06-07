@@ -1839,6 +1839,8 @@ components:
             $ref: '#/components/schemas/PhoneEntity'
         position:
           type: string
+        primaryProperty:
+          type: string
         profession:
           type: string
         properties:
@@ -1847,12 +1849,20 @@ components:
             $ref: '#/components/schemas/ProfilePropertySettingEntity'
         relationshipStatus:
           type: string
+        secondaryCardProperty:
+          type: string
+        secondaryProperty:
+          $ref: '#/components/schemas/ProfileEntity'
         spacesCount:
           type: string
         synchronizedDate:
           type: string
         team:
           type: string
+        tertiaryCardProperty:
+          type: string
+        tertiaryProperty:
+          $ref: '#/components/schemas/ProfileEntity'
         timeZone:
           type: string
         timeZoneDSTSavings:

@@ -21,8 +21,6 @@ tags:
   description: Managing favorites for any type of data
 - name: v1/social/identities
   description: Managing identities
-- name: applications
-  description: Managing Application Registry
 - name: v1/social/relationships
   description: Managing relationships of identities
 - name: v1/social/search
@@ -42,39 +40,6 @@ tags:
 - name: v1/social/users
   description: "Operations on users with their activities, connections and spaces"
 paths:
-  /applications:
-    get:
-      tags:
-      - applications
-      summary: Gets all applications
-      description: This returns a list of all supported applications of type Portlet.
-      operationId: getApplications
-      parameters:
-      - name: expand
-        in: query
-        description: Allow to include optional resource properties when needed
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
-  /applications/categories:
-    get:
-      tags:
-      - applications
-      summary: Gets all application categories
-      description: This returns a list of application categories as configured in
-        application registry
-      operationId: getApplicationCategories
-      parameters:
-      - name: expand
-        in: query
-        description: Allow to include optional resource properties when needed
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Request fulfilled
   /v1/social/activities:
     get:
       tags:
@@ -2216,63 +2181,6 @@ paths:
           description: Internal server error
         "400":
           description: Invalid query input
-  /v1/social/spaces/applications:
-    get:
-      tags:
-      - v1/social/spaces
-      summary: Return list of applications that a use is allowed to add to a space
-      description: Return list of applications that a use is allowed to add to a space
-      operationId: getSpaceApplicationsChoices
-      responses:
-        "200":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "401":
-          description: Unauthorized
-    post:
-      tags:
-      - v1/social/spaces
-      summary: Add an application into list of allowed application to instantiate
-        in spaces
-      description: Add an application into list of allowed application to instantiate
-        in spaces
-      operationId: addSpaceApplication
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/Application'
-      responses:
-        "204":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "401":
-          description: Unauthorized
-  /v1/social/spaces/applications/{applicationName}:
-    delete:
-      tags:
-      - v1/social/spaces
-      summary: Deletes an application from list of allowed application to instantiate
-        in spaces
-      description: Deletes an application from list of allowed application to instantiate
-        in spaces
-      operationId: deleteSpaceApplication
-      parameters:
-      - name: applicationName
-        in: path
-        description: Application name
-        required: true
-        schema:
-          type: string
-      responses:
-        "204":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "401":
-          description: Unauthorized
   /v1/social/spaces/byDisplayName/{displayName}:
     get:
       tags:
@@ -2602,123 +2510,6 @@ paths:
         "400":
           description: Invalid query input
       deprecated: true
-  /v1/social/spaces/{id}/applications:
-    get:
-      tags:
-      - v1/social/spaces
-      summary: Return list of applications of a space
-      description: Return list of applications of a space
-      operationId: getSpaceApplications
-      parameters:
-      - name: id
-        in: path
-        description: Space id
-        required: true
-        schema:
-          type: string
-      responses:
-        "204":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "401":
-          description: Unauthorized
-    post:
-      tags:
-      - v1/social/spaces
-      summary: Add a new application into space
-      description: Add a new application into space
-      operationId: addSpaceApplication_1
-      parameters:
-      - name: id
-        in: path
-        description: Space id
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              required:
-              - appId
-              type: object
-              properties:
-                appId:
-                  type: string
-                  description: Application id
-      responses:
-        "204":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "401":
-          description: Unauthorized
-  /v1/social/spaces/{id}/applications/{appId}:
-    put:
-      tags:
-      - v1/social/spaces
-      summary: Deletes a selected application of a space
-      description: Deletes a selected application of a space
-      operationId: moveSpaceApplicationOrder
-      parameters:
-      - name: id
-        in: path
-        description: Space id
-        required: true
-        schema:
-          type: string
-      - name: appId
-        in: path
-        description: Application id
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              required:
-              - transition
-              type: object
-              properties:
-                transition:
-                  type: integer
-                  description: "Move transition: 1 to move up, -1 to move down"
-                  format: int32
-      responses:
-        "204":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "401":
-          description: Unauthorized
-    delete:
-      tags:
-      - v1/social/spaces
-      summary: Deletes a selected application of a space
-      description: Deletes a selected application of a space
-      operationId: deleteSpaceApplication_1
-      parameters:
-      - name: id
-        in: path
-        description: Space id
-        required: true
-        schema:
-          type: string
-      - name: appId
-        in: path
-        description: Application id
-        required: true
-        schema:
-          type: string
-      responses:
-        "204":
-          description: Request fulfilled
-        "500":
-          description: Internal server error
-        "401":
-          description: Unauthorized
   /v1/social/spaces/{id}/avatar:
     get:
       tags:
@@ -3507,6 +3298,11 @@ paths:
         in: query
         description: "User name information to filter, ex: user name, last name, first\
           \ name or full name"
+        schema:
+          type: string
+      - name: wildCardSearch
+        in: query
+        description: Whether to search for exact word or words containing it
         schema:
           type: string
       - name: excludeCurrentUser
@@ -4393,48 +4189,6 @@ components:
         userIdentityId:
           type: integer
           format: int64
-    Application:
-      type: object
-      properties:
-        accessPermissions:
-          type: array
-          items:
-            type: string
-        applicationName:
-          type: string
-        categoryName:
-          type: string
-        contentId:
-          type: string
-        createdDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        displayName:
-          type: string
-        iconURL:
-          type: string
-        id:
-          type: string
-        modifiedDate:
-          type: string
-          format: date-time
-        storageId:
-          type: string
-        supportedModes:
-          type: array
-          items:
-            type: string
-        type:
-          $ref: '#/components/schemas/ApplicationTypeObject'
-    ApplicationTypeObject:
-      type: object
-      properties:
-        contentType:
-          $ref: '#/components/schemas/ContentTypeObject'
-        name:
-          type: string
     CommentEntity:
       type: object
       properties:
@@ -4557,11 +4311,6 @@ components:
         type:
           type: string
         updateDate:
-          type: string
-    ContentTypeObject:
-      type: object
-      properties:
-        mimeType:
           type: string
     DataEntity:
       type: object
@@ -4921,6 +4670,8 @@ components:
             $ref: '#/components/schemas/PhoneEntity'
         position:
           type: string
+        primaryProperty:
+          type: string
         profession:
           type: string
         properties:
@@ -4929,12 +4680,20 @@ components:
             $ref: '#/components/schemas/ProfilePropertySettingEntity'
         relationshipStatus:
           type: string
+        secondaryCardProperty:
+          type: string
+        secondaryProperty:
+          $ref: '#/components/schemas/ProfileEntity'
         spacesCount:
           type: string
         synchronizedDate:
           type: string
         team:
           type: string
+        tertiaryCardProperty:
+          type: string
+        tertiaryProperty:
+          $ref: '#/components/schemas/ProfileEntity'
         timeZone:
           type: string
         timeZoneDSTSavings:
