@@ -499,7 +499,7 @@ By default, the password will be validated as follows:
 - The length must be between 9 and 256 characters.
 - Must contains at minima 1 digit, 1 lower case, 1 upper case
 
-This default configuration correspond to the minimal password length recommended by [ANSSI-PG-078](https://www.ssi.gouv.fr/uploads/2021/10/anssi-guide-authentification_multifacteur_et_mots_de_passe.pdf) in low to medium sensitivity contexts.
+This default configuration correspond to the minimal password length recommended by [ANSSI-PG-078](https://cyber.gouv.fr/publications/recommandations-relatives-lauthentification-multifacteur-et-aux-mots-de-passe) in low to medium sensitivity contexts.
 
 If you want to change the password validation in medium to high sensitivity contexts, the ANSSI recommends to use the following configuration :
 
