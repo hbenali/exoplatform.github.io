@@ -169,6 +169,17 @@ For example in Keycloack, you can provide the jks file when activating assertion
 
 ![image1](/img/saml/keycloak-activate-saml-encryption.png)
 
+Remember that your jks file contains couple (publicKey, privateKey). You need to export the publicKey only in a new jks to send only the public key to the IDP.
+Extract public cert from jks : 
+```bash
+keytool -export -alias 1 -keystore secure-key.jks -rfc -file public-cert.cert
+```
+
+Add cert in a new jks 
+```bash
+keytool -importcert -file public-cert.cert -keystore public-key.jks -alias 1
+```
+
 Now, when you log into eXo, the assertions responses coming from the IDP are encrypted.
 
 
