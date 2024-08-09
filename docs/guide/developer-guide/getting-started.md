@@ -37,7 +37,7 @@ To use eXo APIs in your own projects, you have to add the eXo Platform Maven rep
               <repository>
                <id>eXo-pub-repo</id>
                <name>eXoPlatform public repo</name>
-               <url>http://repository.exoplatform.org/public</url>
+               <url>https://repository.exoplatform.org/public</url>
               </repository>
           </repositories>
       </profile>
