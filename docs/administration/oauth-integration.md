@@ -100,20 +100,13 @@ After finishing the whole process, you should see in the **Details** tab as belo
 1. Go to <https://www.linkedin.com/developer/apps/>. From this page, register your application by selecting **Create App**.
 2. Fill values for Name, Linkedin Page, Application Logo URL, and create App
 
-<<<<<<< HEAD
-   ![image9](/img/administration/oauth/linkedIn_create_new_app_form.png)
-=======
 ![image10](/img/administration/oauth/linkedIn_create_new_app_form.png)
->>>>>>> 1ebe18a (fix: update documentation for facebook authentication - EXO-74546)
 
 3. On `Product` tab, choose `Sign In with LinkedIn using OpenID Connect` and click on `Request Access` to add OpenIdConnect to your app
 4. On `Auth` tab, in part `OAuth 2.0 settings, add and authorized redirect url :  https://${domainName}/portal/linkedinAuth (Replace domainName with your real domain name)
 5. Get ClientId and ClientSecret for the next step of configuration.
 
-<<<<<<< HEAD
-=======
 ![image11](/img/administration/oauth/linkedIn_authentication_keys.png)
->>>>>>> 1ebe18a (fix: update documentation for facebook authentication - EXO-74546)
 
 ### Google
 
